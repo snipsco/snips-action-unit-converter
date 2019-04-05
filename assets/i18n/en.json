@@ -1,0 +1,29 @@
+{
+    "error": {
+        "mqtt": "Sorry, there was a communication error with the Snips platform",
+        "config": "Sorry, there was an error with your config file.",
+        "locale": "Sorry, there was an error with your language settings.",
+        "intentNotRecognized": "Sorry, I did not understand your request.",
+        "APIResponse": "Sorry, there was an issue with the service provider.",
+        "APIRequest": "Sorry, the service provider is unreachable.",
+        "unspecific": "Oops, something went wrong."
+    },
+    "pokemon": {
+        "info": "{{ name }}'s weight is {{ weight }} and its height is {{ height }}."
+    },
+    "doConvert": {
+        "info": "From unit found is {{ unitFrom }}, to unit is {{ unitTo }}",
+        "conversion": "{{ amount }} {{ unitFrom }} corresponding to {{ amountResult }} {{ unitTo }}",
+        "sameUnits": ["I'm afraid it's not useful to convert a unit into the same one.", "I'm sorry but it's seems that you chose the same units."],
+        "notSameMeasurement":"I am sorry,  but the conversion between a {{ unitTypeFrom }} and a {{ unitTypeTo }} is impossible.",
+        "missingUnitFrom": "Missing unit from, try again.",
+        "missingUnitFromTwice": "You didn't have provided the missing unit, I can't help you.",
+        "missingUnitTo": "Missing unit to, try again."
+    },
+    "unit":{
+        "km":{
+            "singular":"kilometer",
+            "plural":"kilometers"
+        }
+    }
+}
