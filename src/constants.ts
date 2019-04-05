@@ -383,6 +383,26 @@ export const UNITS = [
         apiKey:'Gb'
     },
     {
+        assistantKey:'Gb',
+        apiKey:'Tb'
+    },
+    {
+        assistantKey:'B',
+        apiKey:'B'
+    },
+    {
+        assistantKey:'KB',
+        apiKey:'KB'
+    },
+    {
+        assistantKey:'MB',
+        apiKey:'MB'
+    },
+    {
+        assistantKey:'GB',
+        apiKey:'GB'
+    },
+    {
         assistantKey:'TB',
         apiKey:'TB'
     },
