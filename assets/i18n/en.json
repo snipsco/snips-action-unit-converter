@@ -16,10 +16,10 @@
         "conversion": "{{ amount }} {{ unitFrom }} corresponding to {{ amountResult }} {{ unitTo }}",
         "sameUnits": ["I'm afraid it's not useful to convert a unit into the same one.", "I'm sorry but it's seems that you chose the same units."],
         "notSameMeasurement":"I am sorry,  but the conversion between a {{ unitTypeFrom }} and a {{ unitTypeTo }} is impossible.",
-        "unitFromNotHandled":"Unit from not handle.",
-        "unitToNotHandled":"Unit from not handle.",
-        "missingUnitFrom": "Missing unit from, try again.",
-        "missingUnitFromTwice": "You didn't have provided the missing unit, I can't help you.",
+        "unitFromNotHandled":"I'm afraid I don't not handle the original unit for this conversion",
+        "unitToNotHandled":"I'm afraid I can't convert in this unit yet.",
+        "missingUnitFrom": "Sorry, but I didn't understand from which unit I am supposed to convert, try again.",
+        "missingUnitFromTwice": "You didn't have provided the missing unit, sorry but I can't help you.",
         "missingUnitTo": "Missing unit to, try again."
     },
     "units":{

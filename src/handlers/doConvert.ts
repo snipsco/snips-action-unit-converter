@@ -15,6 +15,54 @@ export type KnownSlots = {
     alreadyAskedBack?: boolean
 }
 
+export async function chooseBestTts(amountToCheck:number, unit: string): Promise<string>{
+    /**
+     * Choose between singular or plural according to the amount of the unit for better tts quality.
+     * 
+     * @param amountToCheck Value of the result
+     * @param unit unit symbol to put in singular or plural version
+     * @return correct word to use
+     */
+    if((0<= amountToCheck)&&(amountToCheck<=1)){
+        // => singular
+        var i18nTtsPath = 'units.' + unit + '.singular'
+    } else{
+        // => plural
+        var i18nTtsPath = 'units.' + unit + '.plural' 
+    }
+    return translation.randomTranslation(i18nTtsPath, {})
+}
+
+export async function chooseBestRoundedValue(subresult:number): Promise<number>{
+    /**
+     * Choose to round up the result or not according to its value.
+     * 
+     * @param subresult Value of the result
+     * @return Rounded value or not
+     */
+    if (subresult>=0.1){
+        return subresult = Math.round(subresult * 1000) / 1000
+    } else {
+        return subresult
+    }
+}
+
+export async function isUnitHandled(unit:string): Promise<string|undefined>{
+    /**
+     * Check if the unit asked by the user is handled by the conversion api.
+     * 
+     * @param unit Understood unit by the assistant
+     * @return apiKey unit symbol according to the mapping, undefined if not handled.
+     */
+    var arrResult = UNITS.filter(function(item){return item.assistantKey === unit;})
+    let apiUnit: string|undefined
+    if (arrResult.length != 0){
+        // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
+        apiUnit = arrResult[0].apiKey
+    } 
+    return apiUnit
+}
+
 export const doConvertHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 1 }) {
     
     const i18n = i18nFactory.get()
@@ -56,6 +104,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         unitTo = knownSlots.unit_to
     }
 
+    /*
     var arrResult = UNITS.filter(function(item){return item.assistantKey === unitFrom;})
     if (arrResult.length != 0){
         // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
@@ -63,16 +112,23 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
     } else{
         // Unit isn't handled by the api
         return translation.randomTranslation('doConvert.unitFromNotHandled', {})
-    }
+    }*/
 
-    var arrResult = UNITS.filter(function(item){return item.assistantKey === unitTo;})
-    if (arrResult.length != 0){
-        // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
-        var apiUnitTo = arrResult[0].apiKey
-    } else{
-        // Unit isn't handled by the api
-        return translation.randomTranslation('doConvert.unitToNotHandled', {})
-    }
+    //var apiUnitFrom = await isUnitHandled(unitFrom)
+
+    /*
+    if(unitTo){
+        var arrResult = UNITS.filter(function(item){return item.assistantKey === unitTo;})
+        if (arrResult.length != 0){
+            // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
+            var apiUnitTo = arrResult[0].apiKey
+        } else{
+            // Unit isn't handled by the api
+            return translation.randomTranslation('doConvert.unitToNotHandled', {})
+        }
+    } else {
+        var apiUnitTo = 'non'
+    }*/
 
     if(!unitFrom){
 
@@ -108,40 +164,30 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
 
     } else if (unitFrom === unitTo){
         flow.end()
-        console.log("Unit_From: " + unitFrom)
-        console.log("Unit_to :" + unitTo)
-        return translation.randomTranslation('doConvert.sameUnits', {})  // ??????
+        return translation.randomTranslation('doConvert.sameUnits', {})
     } else {
         flow.end()
 
         try{
+            let apiUnitFrom, apiUnitTo
+            if(!(apiUnitFrom = await isUnitHandled(unitFrom))){
+                return translation.randomTranslation('doConvert.unitFromNotHandled', {})
+            } else if(!(apiUnitTo = await isUnitHandled(unitTo))){
+                return translation.randomTranslation('doConvert.unitToNotHandled', {})
+            }
+            
             if(!unitTo){
-                var result = Math.round(convert(amountToConvert).from(apiUnitFrom).toBest().val * 100) / 100
-                logger.info('\tConverting to best')
+                // Converting to best unit
+                var subresult = convert(amountToConvert).from(apiUnitFrom).toBest()
+                unitTo = subresult.unit
+                var result = await chooseBestRoundedValue(subresult.val)
             } else {
-                var result = Math.round(convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo) * 100) / 100
-                logger.info('\tConverting to : ', unitTo)
+                var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
+                var result = await chooseBestRoundedValue(subresult)
             }
 
-            if((0<= amountToConvert)&&(amountToConvert<=1)){
-                // => unitToResult : singular
-                var i18nhandlerfromtss = 'units.' + unitFrom + '.singular'
-                var unitFromTts = translation.randomTranslation(i18nhandlerfromtss, {})
-            } else{
-                // => unitToResult : plural
-                var i18nhandlerfromtss = 'units.' + unitFrom + '.plural'
-                var unitFromTts = translation.randomTranslation(i18nhandlerfromtss, {})
-            }
-
-            if((0<= result)&&(result<=1)){
-                // => unitToResult : singular
-                var i18nhandlertotss = 'units.' + unitTo + '.singular'
-                var unitToTts = translation.randomTranslation(i18nhandlertotss, {})
-            } else{
-                // => unitToResult : plural
-                var i18nhandlertotss = 'units.' + unitTo + '.plural'
-                var unitToTts = translation.randomTranslation(i18nhandlertotss, {})
-            }
+            const unitFromTts = await chooseBestTts(amountToConvert, unitFrom)
+            const unitToTts = await chooseBestTts(result, unitTo)
 
             return translation.randomTranslation('doConvert.conversion', {
                 unitFrom: unitFromTts,
