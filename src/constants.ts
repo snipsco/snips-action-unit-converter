@@ -335,7 +335,7 @@ export const UNITS = [
         apiKey:'km/s'
     },
     {
-        assistantKey:'m/h',
+        assistantKey:'mph',
         apiKey:'m/h'
     },
     {

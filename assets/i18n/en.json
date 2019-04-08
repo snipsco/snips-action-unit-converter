@@ -16,6 +16,8 @@
         "conversion": "{{ amount }} {{ unitFrom }} corresponding to {{ amountResult }} {{ unitTo }}",
         "sameUnits": ["I'm afraid it's not useful to convert a unit into the same one.", "I'm sorry but it's seems that you chose the same units."],
         "notSameMeasurement":"I am sorry,  but the conversion between a {{ unitTypeFrom }} and a {{ unitTypeTo }} is impossible.",
+        "unitFromNotHandled":"Unit from not handle.",
+        "unitToNotHandled":"Unit from not handle.",
         "missingUnitFrom": "Missing unit from, try again.",
         "missingUnitFromTwice": "You didn't have provided the missing unit, I can't help you.",
         "missingUnitTo": "Missing unit to, try again."
@@ -349,9 +351,9 @@
             "singular":"kilometer per hour",
             "plural":"kilometers per hour"
         },
-        "m/h":{
-            "singular":"meter per hour",
-            "plural":"meters per hour"
+        "mph":{
+            "singular":"mile per hour",
+            "plural":"miles per hour"
         },
         "knot":{
             "singular":"knots",

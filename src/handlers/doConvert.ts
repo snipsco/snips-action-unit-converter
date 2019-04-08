@@ -5,6 +5,7 @@ import { logger, CustomSlot} from '../utils'
 import { Handler } from './index'
 import { Dialog, Hermes, NluSlot, slotType } from 'hermes-javascript'
 import convert = require('convert-units')
+import { UNITS } from '../constants'
 
 export type KnownSlots = {
     depth: number,
@@ -18,20 +19,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
     
     const i18n = i18nFactory.get()
 
-    logger.info('\tKnown slots ? ', knownSlots)
-
-    
     let unitFrom, unitTo, amountToConvert
-//    let unitFrom: string | undefined = '', unitTo: string | undefined, amountToConvert: number | undefined
-
-    // We need this slot, so if the slot had a low confidence or was not mark as required,
-    // we throw an error.
-    /*if(!('repeat' in knownSlots)){
-        knownSlots.repeat = false
-    } else {
-        flow.end()
-        return translation.randomTranslation('doConvert.sameUnits', {})
-    }*/
 
     if(!('amount' in knownSlots)){
         const amountSlot: NluSlot<slotType.number> | null = message.getSlotsByName(msg, 'amount', { onlyMostConfident:true })
@@ -68,10 +56,23 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         unitTo = knownSlots.unit_to
     }
 
-    /*
-    if(!unitFromSlot && !unitToSlot) {
-        throw new Error('intentNotRecognized')
-    }*/
+    var arrResult = UNITS.filter(function(item){return item.assistantKey === unitFrom;})
+    if (arrResult.length != 0){
+        // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
+        var apiUnitFrom = arrResult[0].apiKey
+    } else{
+        // Unit isn't handled by the api
+        return translation.randomTranslation('doConvert.unitFromNotHandled', {})
+    }
+
+    var arrResult = UNITS.filter(function(item){return item.assistantKey === unitTo;})
+    if (arrResult.length != 0){
+        // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
+        var apiUnitTo = arrResult[0].apiKey
+    } else{
+        // Unit isn't handled by the api
+        return translation.randomTranslation('doConvert.unitToNotHandled', {})
+    }
 
     if(!unitFrom){
 
@@ -115,24 +116,36 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
 
         try{
             if(!unitTo){
-                var result = Math.round(convert(amountToConvert).from(unitFrom).toBest().val * 100) / 100
+                var result = Math.round(convert(amountToConvert).from(apiUnitFrom).toBest().val * 100) / 100
                 logger.info('\tConverting to best')
             } else {
-                var result = Math.round(convert(amountToConvert).from(unitFrom).to(unitTo) * 100) / 100
+                var result = Math.round(convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo) * 100) / 100
                 logger.info('\tConverting to : ', unitTo)
+            }
+
+            if((0<= amountToConvert)&&(amountToConvert<=1)){
+                // => unitToResult : singular
+                var i18nhandlerfromtss = 'units.' + unitFrom + '.singular'
+                var unitFromTts = translation.randomTranslation(i18nhandlerfromtss, {})
+            } else{
+                // => unitToResult : plural
+                var i18nhandlerfromtss = 'units.' + unitFrom + '.plural'
+                var unitFromTts = translation.randomTranslation(i18nhandlerfromtss, {})
             }
 
             if((0<= result)&&(result<=1)){
                 // => unitToResult : singular
+                var i18nhandlertotss = 'units.' + unitTo + '.singular'
+                var unitToTts = translation.randomTranslation(i18nhandlertotss, {})
             } else{
                 // => unitToResult : plural
+                var i18nhandlertotss = 'units.' + unitTo + '.plural'
+                var unitToTts = translation.randomTranslation(i18nhandlertotss, {})
             }
 
-            console.log(result)
-
             return translation.randomTranslation('doConvert.conversion', {
-                unitFrom: unitFrom,
-                unitTo: unitTo,
+                unitFrom: unitFromTts,
+                unitTo: unitToTts,
                 amount: amountToConvert,
                 amountResult: result
             }) 
@@ -143,15 +156,4 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             })
         }
     }
-
-    //const pokemonId = pokemonSlot.value.value
-    //const pokemon = await getPokemon(pokemonId)
-    
-    /*
-    // Return the TTS speech.
-    return translation.randomTranslation('doConvert.info', {
-        unitFrom: unitFrom,
-        unitTo: unitTo
-        //amount: amountToConvert
-    })*/
 }
