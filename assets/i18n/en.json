@@ -8,17 +8,32 @@
         "APIRequest": "Sorry, the service provider is unreachable.",
         "unspecific": "Oops, something went wrong."
     },
-    "pokemon": {
-        "info": "{{ name }}'s weight is {{ weight }} and its height is {{ height }}."
-    },
     "doConvert": {
         "info": "From unit found is {{ unitFrom }}, to unit is {{ unitTo }}",
-        "conversion": "{{ amount }} {{ unitFrom }} corresponding to {{ amountResult }} {{ unitTo }}",
-        "sameUnits": ["I'm afraid it's not useful to convert a unit into the same one.", "I'm sorry but it's seems that you chose the same units."],
+        "conversion": [
+            "{{ amount }} {{ unitFrom }} corresponding to {{ amountResult }} {{ unitTo }}",
+            "{{ amount }} {{ unitFrom }} is {{ amountResult }} {{ unitTo }}",
+            "{{ amount }} {{ unitFrom }} equal {{ amountResult }} {{ unitTo }}"
+        ],
+        "sameUnits": [
+            "I'm afraid it's not useful to convert a unit into the same one.", 
+            "I'm sorry but it's seems that you chose the same units."
+        ],
         "notSameMeasurement":"I am sorry,  but the conversion between a {{ unitTypeFrom }} and a {{ unitTypeTo }} is impossible.",
-        "unitFromNotHandled":"I'm afraid I don't not handle the original unit for this conversion",
-        "unitToNotHandled":"I'm afraid I can't convert in this unit yet.",
-        "missingUnitFrom": "Sorry, but I didn't understand from which unit I am supposed to convert, try again.",
+        "unitFromNotHandled":[
+            "I'm afraid I don't handle the original unit for this conversion",
+            "I am sorry, but I don't know one of the unit."
+        ],
+        "unitToNotHandled":[
+            "I'm afraid I can't convert in this unit yet.",
+            "I am sorry, but I don't know one of the unit."
+
+        ],
+        "missingUnitFrom": [
+            "Sorry, but I didn't understand from which unit I am supposed to convert, try again.",
+            "I'm afraid I did'nt understand which unit are you trying to convert from.",
+            "Which unit are you trying to convert from ?"
+        ],
         "missingUnitFromTwice": "You didn't have provided the missing unit, sorry but I can't help you.",
         "missingUnitTo": "Missing unit to, try again."
     },
@@ -48,7 +63,7 @@
             "plural":"feet"
         },
         "mi":{
-            "singular":"miles",
+            "singular":"mile",
             "plural":"miles"
         },
         "mm2":{
@@ -442,6 +457,10 @@
         "kA":{
             "singular":"kilo-ampere",
             "plural":"kilo-amperes"
+        },
+        "acre":{
+            "singular":"acre",
+            "plural":"acres"
         }
     }
 }

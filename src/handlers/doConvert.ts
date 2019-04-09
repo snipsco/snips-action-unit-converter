@@ -43,8 +43,28 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
     if (subresult>=0.1){
         return subresult = Math.round(subresult * 1000) / 1000
     } else {
+        let regexFilter: RegExp = /^[0-9]*\.0*[^0][0-9]{2,}$/;
+        let strSubresult = subresult.toString()
+        if(regexFilter.test(strSubresult)){
+            const posZero = strSubresult.lastIndexOf('0')
+            subresult = +strSubresult.slice(0, (+posZero + 4))
+        }
         return subresult
     }
+}
+
+export async function chooseBestNotation(result:number): Promise<string>{
+    let strResult
+    if((result>1000000)||(result<=0.0001)){
+        let regexExp: RegExp = /^[0-9]+\.+[0-9]*e(\-|\+){1}[0-9]*$/
+        strResult = result.toExponential()
+        if(regexExp.test(strResult)){
+            strResult = strResult.split("e")[0] + " 10 power " + strResult.split("e")[1]
+        }
+    } else {
+        strResult = result.toString()
+    }
+    return strResult
 }
 
 export async function isUnitHandled(unit:string): Promise<string|undefined>{
@@ -155,10 +175,10 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
                 return doConvertHandler(msg, flow, slotsToBeSent)
             })
     
-            return i18n('doConvert.missingUnitFrom')
+            return translation.randomTranslation('doConvert.missingUnitFrom', {})
         } else {
             flow.end()
-            return i18n('doConvert.missingUnitFromTwice')
+            return translation.randomTranslation('doConvert.missingUnitFromTwice', {})
         }
         
 
@@ -184,16 +204,18 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             } else {
                 var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
                 var result = await chooseBestRoundedValue(subresult)
+                logger.info('\tresult:', result)
             }
 
             const unitFromTts = await chooseBestTts(amountToConvert, unitFrom)
             const unitToTts = await chooseBestTts(result, unitTo)
+            const strResult = await chooseBestNotation(result)
 
             return translation.randomTranslation('doConvert.conversion', {
                 unitFrom: unitFromTts,
                 unitTo: unitToTts,
                 amount: amountToConvert,
-                amountResult: result
+                amountResult: strResult
             }) 
         } catch(e){
             return translation.randomTranslation('doConvert.notSameMeasurement', {

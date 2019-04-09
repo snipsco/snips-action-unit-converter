@@ -429,5 +429,9 @@ export const UNITS = [
     {
         assistantKey:'kA',
         apiKey:'kA'
+    },
+    {
+        assistantKey:'acre',
+        apiKey:'ac'
     }
 ]
