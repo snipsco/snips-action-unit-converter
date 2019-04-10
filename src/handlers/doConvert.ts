@@ -49,7 +49,8 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
             const posZero = strSubresult.lastIndexOf('0')
             subresult = +strSubresult.slice(0, (+posZero + 4))
         }
-        return subresult
+        logger.info('\tSubresult :', subresult)
+        return subresult 
     }
 }
 
@@ -58,8 +59,17 @@ export async function chooseBestNotation(result:number): Promise<string>{
     if((result>1000000)||(result<=0.0001)){
         let regexExp: RegExp = /^[0-9]+\.+[0-9]*e(\-|\+){1}[0-9]*$/
         strResult = result.toExponential()
+        logger.info('\tStrresult :', strResult)
         if(regexExp.test(strResult)){
-            strResult = strResult.split("e")[0] + " 10 power " + strResult.split("e")[1]
+            let regexTrunc: RegExp = /^[0-9]*\.[0-9]{2,}$/
+            let beforeEResult = strResult.split("e")[0]
+            let postEResult = strResult.split("e")[1]
+
+            if(regexTrunc.test(beforeEResult)){
+                const posPoint = beforeEResult.lastIndexOf('.')
+                beforeEResult = +beforeEResult.slice(0, (+posPoint + 4))
+            }
+            strResult = beforeEResult + " time 10 to the " + postEResult
         }
     } else {
         strResult = result.toString()
@@ -81,6 +91,14 @@ export async function isUnitHandled(unit:string): Promise<string|undefined>{
         apiUnit = arrResult[0].apiKey
     } 
     return apiUnit
+}
+
+export async function isOzMassOrVolume(unitElse:string|undefined): Promise<string>{
+    if(convert().describe(unitElse).measure == 'volume'){
+        return 'fl-oz'
+    } else {
+        return 'oz'
+    }
 }
 
 export const doConvertHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 1 }) {
@@ -124,32 +142,6 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         unitTo = knownSlots.unit_to
     }
 
-    /*
-    var arrResult = UNITS.filter(function(item){return item.assistantKey === unitFrom;})
-    if (arrResult.length != 0){
-        // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
-        var apiUnitFrom = arrResult[0].apiKey
-    } else{
-        // Unit isn't handled by the api
-        return translation.randomTranslation('doConvert.unitFromNotHandled', {})
-    }*/
-
-    //var apiUnitFrom = await isUnitHandled(unitFrom)
-
-    /*
-    if(unitTo){
-        var arrResult = UNITS.filter(function(item){return item.assistantKey === unitTo;})
-        if (arrResult.length != 0){
-            // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
-            var apiUnitTo = arrResult[0].apiKey
-        } else{
-            // Unit isn't handled by the api
-            return translation.randomTranslation('doConvert.unitToNotHandled', {})
-        }
-    } else {
-        var apiUnitTo = 'non'
-    }*/
-
     if(!unitFrom){
 
         if(!('alreadyAskedBack' in knownSlots)){
@@ -188,11 +180,17 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
     } else {
         flow.end()
 
+        if((unitFrom == 'oz')&&(unitTo)){
+            unitFrom = await isOzMassOrVolume(unitTo)
+        } else if(unitTo == 'oz'){
+            unitTo = await isOzMassOrVolume(unitFrom)
+        }
+
         try{
             let apiUnitFrom, apiUnitTo
             if(!(apiUnitFrom = await isUnitHandled(unitFrom))){
                 return translation.randomTranslation('doConvert.unitFromNotHandled', {})
-            } else if(!(apiUnitTo = await isUnitHandled(unitTo))){
+            } else if(!(apiUnitTo = await isUnitHandled(unitTo))&&(unitTo)){
                 return translation.randomTranslation('doConvert.unitToNotHandled', {})
             }
             
@@ -203,6 +201,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
                 var result = await chooseBestRoundedValue(subresult.val)
             } else {
                 var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
+                logger.info('\tconvert:', subresult)
                 var result = await chooseBestRoundedValue(subresult)
                 logger.info('\tresult:', result)
             }
