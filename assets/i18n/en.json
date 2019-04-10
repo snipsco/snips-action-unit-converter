@@ -37,6 +37,28 @@
         "missingUnitFromTwice": "You didn't have provided the missing unit, sorry but I can't help you.",
         "missingUnitTo": "Missing unit to, try again."
     },
+    "conversionPossibilities": {
+        "generalInfo": "You can ask me to make some conversion about {{ possibilities }}.",
+        "unitPossibilities": "I can convert {{ unit }} in {{ possibilities }}.",
+        "measurementPossibilities": "I can convert {{ measurement }} in {{ possibilities }}.",
+        "unitUnknown": "I'm afraid I don't know this unit, sorry",
+        "measureUnknown": "I'm afraid I don't know anything about that type of measurement, sorry",
+        "caseOunces":"Ounces can be meant as a mass or a volume."
+    },
+    "measures":{
+        "length":"lenght",
+        "area":"area",
+        "mass":"mass",
+        "volume":"volume",
+        "temperature":"temperature",
+        "time":"time",
+        "digital":"digital",
+        "speed":"speed",
+        "pressure":"pressure",
+        "current":"current",
+        "voltage":"voltage",
+        "volumeFlowRate":"volume flow rate"
+    },
     "units":{
         "mm":{
             "singular":"millimeter",
@@ -126,6 +148,10 @@
             "singular":"ton",
             "plural":"tons"
         },
+        "mt":{
+            "singular":"ton",
+            "plural":"tons"
+        },
         "mm3":{
             "singular":"cubic millimeter",
             "plural":"cubic millimeters"
@@ -196,7 +222,7 @@
         },
         "gal":{
             "singular":"gallon",
-            "plural":"gallon"
+            "plural":"gallons"
         },
         "C":{
             "singular":"Celsius degree",
@@ -458,7 +484,7 @@
             "singular":"kilo-ampere",
             "plural":"kilo-amperes"
         },
-        "acre":{
+        "ac":{
             "singular":"acre",
             "plural":"acres"
         }

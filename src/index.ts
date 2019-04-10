@@ -22,6 +22,10 @@ export default function ({
                     {
                         intent: 'snips-assistant:UnitConvert',
                         action: handlers.doConvert
+                    },
+                    {
+                        intent: 'snips-assistant:ConversionPossibilities',
+                        action: handlers.conversionPossibilities
                     }
                 ])
                 resolve(done)

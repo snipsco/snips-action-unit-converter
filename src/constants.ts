@@ -67,6 +67,10 @@ export const UNITS = [
         apiKey:'mi2'
     },
     {
+        assistantKey:'yd2',
+        apiKey:'yd2'
+    },
+    {
         assistantKey:'mcg',
         apiKey:'mg'
     },

@@ -2,10 +2,10 @@ import { Dialog, NluSlot } from 'hermes-javascript'
 
 type CustomSlot = NluSlot<typeof Dialog.enums.slotType.custom>
 
-export function createUnitSlot(name: string): CustomSlot {
+export function createUnitFromSlot(name: string): CustomSlot {
     return {
-        slotName: 'unit_name',
-        entity: 'unit_name',
+        slotName: 'unit_to',
+        entity: 'unit_custom',
         confidenceScore: 1,
         rawValue: name,
         value: {
@@ -19,15 +19,32 @@ export function createUnitSlot(name: string): CustomSlot {
     }
 }
 
-export function createPokemonIdSlot(id: string) {
+export function createUnitToSlot(name: string): CustomSlot {
     return {
-        slotName: 'pokemon_id',
-        entity: 'pokemon_id',
+        slotName: 'unit_to',
+        entity: 'unit_custom',
         confidenceScore: 1,
-        rawValue: id,
+        rawValue: name,
         value: {
-            kind: 'Custom',
-            value: id
+            kind: Dialog.enums.slotType.custom,
+            value: name
+        },
+        range: {
+            end: 0,
+            start: 1
+        }
+    }
+}
+
+export function createAmountSlot(amount: number) {
+    return {
+        slotName: 'amount',
+        entity: 'snips/number',
+        confidenceScore: 1,
+        rawValue: amount,
+        value: {
+            kind: 'Number',
+            value: amount
         },
         range: {
             start: 0,

@@ -8,7 +8,40 @@
         "APIRequest": "Désolé, le service distant est injoignable.",
         "unspecific": "Oups, quelque chose s'est mal passé."
     },
-    "pokemon": {
-        "info": "Le pokémon {{ name }} pèse {{ weight }} kilos et mesure {{ height }} centimètres."
+    "doConvert": {
+        "info": "L'unité de départ trouvée est {{ unitFrom }}, celle de destination est {{ unitTo }}",
+        "conversion": [
+            "{{ amount }} {{ unitFrom }} correspond à {{ amountResult }} {{ unitTo }}",
+            "{{ amount }} {{ unitFrom }} font {{ amountResult }} {{ unitTo }}",
+            "{{ amount }} {{ unitFrom }} égal {{ amountResult }} {{ unitTo }}"
+        ],
+        "sameUnits": [
+            "Je crains que convertir une unité dans la même ne soit pas vraiment utile.", 
+            "Je suis désolé mais j'ai l'impression que vous avez choisis les deux mêmes unités."
+        ],
+        "notSameMeasurement":"Je suis désolé,  mais la conversion entre des {{ unitTypeFrom }} et des {{ unitTypeTo }} est impossible.",
+        "unitFromNotHandled":[
+            "Je crains que je ne connais pas l'unité originale.",
+            "Désolé, mais je ne connais pas l'une des unités."
+        ],
+        "unitToNotHandled":[
+            "Je crains que je ne peux pas encore convertir dans cette unité.",
+            "Désolé, mais je ne connais pas l'une des unités."
+        ],
+        "missingUnitFrom": [
+            "Désolé, mais je n'ai pas compris depuis qu'elle unité souhaitez-vous convertir, essayez encore !",
+            "Je crains que je n'ai pas compris depuis qu'elle unité vous souhaitez convertir.",
+            "Depuis qu'elle unité souhaitez vous convertir ?"
+        ],
+        "missingUnitFromTwice": "Vous n'avez pas fournit l'unité manquante. Désolé mais je ne peux vous aider.",
+        "missingUnitTo": "Il manque l'unité dans laquelle vous souhaitez convertir."
+    },
+    "conversionPossibilities": {
+        "generalInfo": "Vous pouvez me demander de faire des conversiosn de {{ possibilities }}.",
+        "unitPossibilities": "Je peux convertir des {{ unit }} en {{ possibilities }}.",
+        "measurementPossibilities": "Je peux convertir {{ measurement }} en {{ possibilities }}.",
+        "unitUnknown": "Je crains que je ne connais pas  cette unité, désolé.",
+        "measureUnknown": "Je crains que je ne connais pas ce type de mesure, désolé.",
+        "caseOunces":"Ounces can be meant as a mass or a volume."
     }
 }
