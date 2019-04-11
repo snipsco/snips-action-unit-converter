@@ -23,6 +23,8 @@ export async function chooseBestTts(amountToCheck:number, unit: string): Promise
      * @param unit unit symbol to put in singular or plural version
      * @return correct word to use
      */
+    console.log('generateTtsMeasures')
+    
     if((0<= amountToCheck)&&(amountToCheck<=1)){
         // => singular
         var i18nTtsPath = 'units.' + unit + '.singular'
@@ -40,6 +42,8 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
      * @param subresult Value of the result
      * @return Rounded value or not
      */
+    console.log('generateTtsMeasures')
+    
     if (subresult>=0.1){
         return subresult = Math.round(subresult * 1000) / 1000
     } else {
@@ -55,6 +59,8 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
 }
 
 export async function chooseBestNotation(result:number): Promise<string>{
+    console.log('generateTtsMeasures')
+    
     let strResult
     if((result>1000000)||(result<=0.0001)){
         let regexExp: RegExp = /^[0-9]+\.+[0-9]*e(\-|\+){1}[0-9]*$/
@@ -84,6 +90,8 @@ export async function isUnitHandled(unit:string): Promise<string|undefined>{
      * @param unit Understood unit by the assistant
      * @return apiKey unit symbol according to the mapping, undefined if not handled.
      */
+    console.log('generateTtsMeasures')
+
     var arrResult = UNITS.filter(function(item){return item.assistantKey === unit;})
     let apiUnit: string|undefined
     if (arrResult.length != 0){
@@ -94,6 +102,7 @@ export async function isUnitHandled(unit:string): Promise<string|undefined>{
 }
 
 export async function isOzMassOrVolume(unitElse:string|undefined): Promise<string>{
+    console.log('generateTtsMeasures')
     if(convert().describe(unitElse).measure == 'volume'){
         return 'fl-oz'
     } else {
@@ -102,6 +111,7 @@ export async function isOzMassOrVolume(unitElse:string|undefined): Promise<strin
 }
 
 export async function getAssistantKey(unit: string): Promise<string|undefined>{
+    console.log('generateTtsMeasures')
     var arrResult = UNITS.filter(function(item){return item.apiKey === unit;})
     let assistantUnit: string|undefined
     if (arrResult.length != 0){
@@ -112,6 +122,7 @@ export async function getAssistantKey(unit: string): Promise<string|undefined>{
 }
 
 export async function generateTtsMeasures(possibleMeasures: string[]): Promise<string|undefined>{
+    console.log('generateTtsMeasures')
     let possibleMeasuresTts : string[] = []
 
     for (let item in possibleMeasures){
@@ -133,6 +144,7 @@ export async function generateTtsUnits(possibleUnits: string[]): Promise<string>
      * @param unit unit symbol to put in singular or plural version
      * @return correct word to use
      */
+    console.log('generateTtsUnits')
     let possibleUnitsTts : string[] = []
     for (let item in possibleUnits){
         var possibleUnitApi = await getAssistantKey(possibleUnits[item])

@@ -47,6 +47,7 @@ export function bootstrap() {
                 }
             }
         })
+        //console.log('log')
     })
 
     beforeEach(done => {
@@ -59,9 +60,11 @@ export function bootstrap() {
             throw err
         })
         setupVars.mqttClient = client
+        console.log('b4each')
     })
 
     afterEach(() => {
+        console.log('aftereach')
         setupVars.mqttClient.end(true)
     })
 

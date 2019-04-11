@@ -4,7 +4,7 @@ type CustomSlot = NluSlot<typeof Dialog.enums.slotType.custom>
 
 export function createUnitFromSlot(name: string): CustomSlot {
     return {
-        slotName: 'unit_to',
+        slotName: 'unit_from',
         entity: 'unit_custom',
         confidenceScore: 1,
         rawValue: name,

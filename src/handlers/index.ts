@@ -12,6 +12,7 @@ export type Handler = (
 // Wrap handlers to gracefully capture errors
 const handlerWrapper = (handler: Handler): Handler => (
     async (message, flow, ...args) => {
+        console.log(message)
         logger.debug('message: %O', message)
         try {
             // Run handler until completion

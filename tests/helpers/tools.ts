@@ -33,10 +33,7 @@ export function getFreePort(): Promise<number> {
     })
 }
 
-export function getMessageKey(message: { text?: string }) {
+export function getMessageKey(message) {
     return JSON.parse(message.text).key
-}
-export function getMessageContents(message: { text?: string }) {
-    return JSON.parse(message.text || '{}')
 }
 
