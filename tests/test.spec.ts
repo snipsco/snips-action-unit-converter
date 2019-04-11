@@ -18,9 +18,11 @@ it.only('should query a conversion between a unit and an amount (45km)and anothe
     const endSessionMessage = await session.end()
     expect(endSessionMessage).toBe('test')
     const { key, options } = JSON.parse(endSessionMessage.text || '')
-    expect(key).toBe('unit.info')
-    expect(options.name).toBe('bulbasaur')
-    expect(options.amount).toBe(27.962)
+    expect(key).toBe('doConvert.conversion')
+    expect(options.amount).toBe(45)
+    expect(options.unitFrom).toBe('km')
+    expect(options.unitTo).toBe('mi')
+    expect(options.amountResult).toBe(27.962)
 })
 
 /*
@@ -38,9 +40,11 @@ it('should make a conversion between a unit (l) and another (ml) without amount'
     // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
-    expect(key).toBe('unit.info')
-    expect(options.name).toBe('bulbasaur')
-    expect(options.amount).toBe(27.962)
+    expect(key).toBe('doConvert.conversion')
+    expect(options.amount).toBe(1)
+    expect(options.unitFrom).toBe('l')
+    expect(options.unitTo).toBe('ml')
+    expect(options.amountResult).toBe(1000)
 })
 
 it('should return an error telling that a conversion between two different measure is impossible (digital in pressure)', async () => {
@@ -58,9 +62,11 @@ it('should return an error telling that a conversion between two different measu
     // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
-    expect(key).toBe('unit.info')
-    expect(options.name).toBe('bulbasaur')
-    expect(options.amount).toBe(27.962)
+    expect(key).toBe('doConvert.conversion')
+    expect(options.amount).toBe(1)
+    expect(options.unitFrom).toBe('l')
+    expect(options.unitTo).toBe('ml')
+    expect(options.amountResult).toBe(1000)
 })
 
 it('should tell that the unit_to is not handle by the converter (you can\'t convert amperes into bananas)', async () => {

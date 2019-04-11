@@ -43,5 +43,449 @@
         "unitUnknown": "Je crains que je ne connais pas  cette unité, désolé.",
         "measureUnknown": "Je crains que je ne connais pas ce type de mesure, désolé.",
         "caseOunces":"Ounces can be meant as a mass or a volume."
+    },
+    "measures":{
+        "length":"longueur",
+        "area":"aire",
+        "mass":"masse",
+        "volume":"volume",
+        "temperature":"température",
+        "time":"temps",
+        "digital":"digital",
+        "speed":"vitesse",
+        "pressure":"pression",
+        "current":"courant",
+        "voltage":"voltage",
+        "volumeFlowRate":"débit volumique"
+    },
+    "units":{
+        "mm":{
+            "singular":"millimètre",
+            "plural":"millimètres"
+        },
+        "cm":{
+            "singular":"centimètre",
+            "plural":"centimètres"
+        },
+        "m":{
+            "singular":"mètre",
+            "plural":"mètres"
+        },
+        "km":{
+            "singular":"kilomètres",
+            "plural":"kilometers"
+        },
+        "in":{
+            "singular":"pouce",
+            "plural":"pouces"
+        },
+        "ft":{
+            "singular":"pied",
+            "plural":"pieds"
+        },
+        "mi":{
+            "singular":"mile",
+            "plural":"miles"
+        },
+        "mm2":{
+            "singular":"millimètre carré",
+            "plural":"millimètres carrés"
+        },
+        "cm2":{
+            "singular":"centimètre carré",
+            "plural":"centimètres carrés"
+        },
+        "m2":{
+            "singular":"mètre carré",
+            "plural":"mètres carrés"
+        },
+        "km2":{
+            "singular":"kilomètre carré",
+            "plural":"kilomètres carrés"
+        },
+        "ha":{
+            "singular":"hectare",
+            "plural":"hectares"
+        },
+        "in2":{
+            "singular":"pouce carré",
+            "plural":"pouces carrés"
+        },
+        "ft2":{
+            "singular":"pied carré",
+            "plural":"pieds carrés"
+        },
+        "mi2":{
+            "singular":"mile carré",
+            "plural":"miles carrés"
+        },
+        "mcg":{
+            "singular":"microgramme",
+            "plural":"microgrammes"
+        },
+        "mg":{
+            "singular":"milligramme",
+            "plural":"milligrammes"
+        },
+        "g":{
+            "singular":"gramme",
+            "plural":"grammes"
+        },
+        "kg":{
+            "singular":"kilogramme",
+            "plural":"kilogrammes"
+        },
+        "oz":{
+            "singular":"once",
+            "plural":"onces"
+        },
+        "lb":{
+            "singular":"livre",
+            "plural":"livres"
+        },
+        "t":{
+            "singular":"tonne",
+            "plural":"tonnes"
+        },
+        "mt":{
+            "singular":"tonne",
+            "plural":"tonnes"
+        },
+        "mm3":{
+            "singular":"millimètre cube",
+            "plural":"millimètres cubes"
+        },
+        "cm3":{
+            "singular":"centimètre cube",
+            "plural":"centimètres cubes"
+        },
+        "m3":{
+            "singular":"mètre cube",
+            "plural":"mètres cubes"
+        },
+        "km3":{
+            "singular":"kilomètre cube",
+            "plural":"kilomètres cubes"
+        },
+        "in3":{
+            "singular":"pouce cube",
+            "plural":"pouces cubes"
+        },
+        "ft3":{
+            "singular":"pied cube",
+            "plural":"pieds cubes"
+        },
+        "yd3":{
+            "singular":"yard cube",
+            "plural":"yards cubes"
+        },
+        "ml":{
+            "singular":"millilitre",
+            "plural":"millilitres"
+        },
+        "cl":{
+            "singular":"centilitre",
+            "plural":"centilitres"
+        },
+        "l":{
+            "singular":"litre",
+            "plural":"litres"
+        },
+        "kl":{
+            "singular":"kilolitre",
+            "plural":"kilolitres"
+        },
+        "tsp":{
+            "singular":"cuillère à café",
+            "plural":"cuullières à café"
+        },
+        "tbsp":{
+            "singular":"cuillère à soupe",
+            "plural":"cuillières à soupe"
+        },
+        "fl-oz":{
+            "singular":"once liquide",
+            "plural":"onces liquides"
+        },
+        "cup":{
+            "singular":"tasse",
+            "plural":"tasses"
+        },
+        "pt":{
+            "singular":"pinte",
+            "plural":"pintes"
+        },
+        "qt":{
+            "singular":"quart",
+            "plural":"quarts"
+        },
+        "gal":{
+            "singular":"gallon",
+            "plural":"gallons"
+        },
+        "C":{
+            "singular":"degré Celsius",
+            "plural":"degrés Celsius"
+        },
+        "F":{
+            "singular":"degré Fahrenheit",
+            "plural":"degrés Fahrenheit"
+        },
+        "K":{
+            "singular":"degré Kelvin",
+            "plural":"degrés Kelvin"
+        },
+        "ns":{
+            "singular":"nanoseconde",
+            "plural":"nanosecondes"
+        },
+        "mu":{
+            "singular":"microseconde",
+            "plural":"microsecondes"
+        },
+        "ms":{
+            "singular":"milliseconde",
+            "plural":"millisecondes"
+        },
+        "s":{
+            "singular":"seconde",
+            "plural":"secondes"
+        },
+        "min":{
+            "singular":"minute",
+            "plural":"minutes"
+        },
+        "h":{
+            "singular":"heure",
+            "plural":"heures"
+        },
+        "d":{
+            "singular":"jour",
+            "plural":"jours"
+        },
+        "week":{
+            "singular":"semaine",
+            "plural":"semaines"
+        },
+        "month":{
+            "singular":"mois",
+            "plural":"mois"
+        },
+        "year":{
+            "singular":"année",
+            "plural":"années"
+        },
+        "mm3/s":{
+            "singular":"millimètre cube par seconde",
+            "plural":"millimètres cubes par seconde"
+        },
+        "cm3/s":{
+            "singular":"centimètre cube par seconde",
+            "plural":"centimètres cubes par seconde"
+        },
+        "ml/s":{
+            "singular":"millilitre par seconde",
+            "plural":"millilitres par seconde"
+        },
+        "cl/s":{
+            "singular":"centilitre par seconde",
+            "plural":"centilitres par secondes"
+        },
+        "dl/s":{
+            "singular":"décilitre par seconde",
+            "plural":"décilitres par seconde"
+        },
+        "l/s":{
+            "singular":"litre par seconde",
+            "plural":"litres per second"
+        },
+        "l/min":{
+            "singular":"litre par minute",
+            "plural":"litres par minute"
+        },
+        "l/h":{
+            "singular":"litre par heure",
+            "plural":"litres par heure"
+        },
+        "kl/s":{
+            "singular":"kilolitre par seconde",
+            "plural":"kilolitres par seconde"
+        },
+        "kl/min":{
+            "singular":"kilolitre par minute",
+            "plural":"kilolitres par minute"
+        },
+        "kl/h":{
+            "singular":"kilolitre par heure",
+            "plural":"kilolitres par heure"
+        },
+        "m3/s":{
+            "singular":"mètre cube par seconde",
+            "plural":"mètres cubes par seconde"
+        },
+        "m3/min":{
+            "singular":"mètre cube par minute",
+            "plural":"mètres cubes par minute"
+        },
+        "m3/h":{
+            "singular":"mètre cube par heure",
+            "plural":"mètres cubes par heure"
+        },
+        "km3/s":{
+            "singular":"kilomètre cube par seconde",
+            "plural":"kilomètres cubes par seconde"
+        },
+        "in3/s":{
+            "singular":"pouce cube par seconde",
+            "plural":"pouces cubes par seconde"
+        },
+        "in3/min":{
+            "singular":"pouce cube par minute",
+            "plural":"pouces cubes par minute"
+        },
+        "in3/h":{
+            "singular":"pouce cube par heure",
+            "plural":"pouces cubes par heure"
+        },
+        "fl-oz/s":{
+            "singular":"once liquide par seconde",
+            "plural":"onces liquides par seconde"
+        },
+        "fl-oz/min":{
+            "singular":"once liquide par minute",
+            "plural":"onces liquides par minute"
+        },
+        "fl-oz/h":{
+            "singular":"once liquide par heure",
+            "plural":"onces liquides par heure"
+        },
+        "ft3/s":{
+            "singular":"pouce cube par seconde",
+            "plural":"pouces cubes par seconde"
+        },
+        "ft3/min":{
+            "singular":"pouce cube par minute",
+            "plural":"pouces cubes par minute"
+        },
+        "ft3/h":{
+            "singular":"pouce cube par heure",
+            "plural":"pouces cubes par heure"
+        },
+        "yd3/s":{
+            "singular":"yard cube par seconde",
+            "plural":"yards cubes par seconde"
+        },
+        "yd3/min":{
+            "singular":"yard cube par minute",
+            "plural":"yards cubes par minute"
+        },
+        "yd3/h":{
+            "singular":"yard cube par heure",
+            "plural":"yards cubes par heure"
+        },
+        "m/s":{
+            "singular":"mètre par seconde",
+            "plural":"mètres par seconde"
+        },
+        "km/h":{
+            "singular":"kilomètre par heure",
+            "plural":"kilomètres par heure"
+        },
+        "mph":{
+            "singular":"mile par heure",
+            "plural":"miles par heure"
+        },
+        "knot":{
+            "singular":"noeud",
+            "plural":"noeuds"
+        },
+        "ft/s":{
+            "singular":"pied par seconde",
+            "plural":"pieds par seconde"
+        },
+        "Pa":{
+            "singular":"Pascal",
+            "plural":"Pascals"
+        },
+        "hPa":{
+            "singular":"hectopascal",
+            "plural":"hectopascals"
+        },
+        "kPa":{
+            "singular":"kilopascal",
+            "plural":"kilopascals"
+        },
+        "MPa":{
+            "singular":"megapascal",
+            "plural":"megapascals"
+        },
+        "bar":{
+            "singular":"bar",
+            "plural":"bars"
+        },
+        "b":{
+            "singular":"bit",
+            "plural":"bits"
+        },
+        "Kb":{
+            "singular":"kilobit",
+            "plural":"kilobits"
+        },
+        "Mb":{
+            "singular":"mégabit",
+            "plural":"mégabits"
+        },
+        "Gb":{
+            "singular":"gigabit",
+            "plural":"gigabits"
+        },
+        "Tb":{
+            "singular":"térabit",
+            "plural":"térabits"
+        },
+        "B":{
+            "singular":"octet",
+            "plural":"octets"
+        },
+        "KB":{
+            "singular":"kilo-octet",
+            "plural":"kilo-octets"
+        },
+        "MB":{
+            "singular":"méga-octet",
+            "plural":"méga-octets"
+        },
+        "GB":{
+            "singular":"giga-octet",
+            "plural":"giga-octets"
+        },
+        "TB":{
+            "singular":"téra-octet",
+            "plural":"téra-octets"
+        },
+        "V":{
+            "singular":"volt",
+            "plural":"volts"
+        },
+        "mV":{
+            "singular":"millivolt",
+            "plural":"millivolts"
+        },
+        "A":{
+            "singular":"ampère",
+            "plural":"ampères"
+        },
+        "mA":{
+            "singular":"milli-ampère",
+            "plural":"milli-ampères"
+        },
+        "kA":{
+            "singular":"kilo-ampère",
+            "plural":"kilo-ampères"
+        },
+        "ac":{
+            "singular":"acre",
+            "plural":"acres"
+        }
     }
 }
