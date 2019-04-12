@@ -351,6 +351,10 @@ export const UNITS = [
         apiKey:'ft/s'
     },
     {
+        assistantKey:'tsp/s',
+        apiKey:'tsp/s'
+    },
+    {
         assistantKey:'Pa',
         apiKey:'Pa'
     },

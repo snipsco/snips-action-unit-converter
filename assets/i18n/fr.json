@@ -197,7 +197,7 @@
         },
         "tsp":{
             "singular":"cuillère à café",
-            "plural":"cuullières à café"
+            "plural":"cuillières à café"
         },
         "tbsp":{
             "singular":"cuillère à soupe",
@@ -276,132 +276,136 @@
             "plural":"années"
         },
         "mm3/s":{
-            "singular":"millimètre cube par seconde",
-            "plural":"millimètres cubes par seconde"
+            "singular":"millimètre cube seconde",
+            "plural":"millimètres cubes seconde"
         },
         "cm3/s":{
-            "singular":"centimètre cube par seconde",
-            "plural":"centimètres cubes par seconde"
+            "singular":"centimètre cube seconde",
+            "plural":"centimètres cubes seconde"
         },
         "ml/s":{
-            "singular":"millilitre par seconde",
-            "plural":"millilitres par seconde"
+            "singular":"millilitre seconde",
+            "plural":"millilitres seconde"
         },
         "cl/s":{
-            "singular":"centilitre par seconde",
-            "plural":"centilitres par secondes"
+            "singular":"centilitre seconde",
+            "plural":"centilitres secondes"
         },
         "dl/s":{
-            "singular":"décilitre par seconde",
-            "plural":"décilitres par seconde"
+            "singular":"décilitre seconde",
+            "plural":"décilitres seconde"
         },
         "l/s":{
-            "singular":"litre par seconde",
-            "plural":"litres per second"
+            "singular":"litre seconde",
+            "plural":"litres second"
         },
         "l/min":{
-            "singular":"litre par minute",
-            "plural":"litres par minute"
+            "singular":"litre minute",
+            "plural":"litres minute"
         },
         "l/h":{
-            "singular":"litre par heure",
-            "plural":"litres par heure"
+            "singular":"litre heure",
+            "plural":"litres heure"
         },
         "kl/s":{
-            "singular":"kilolitre par seconde",
-            "plural":"kilolitres par seconde"
+            "singular":"kilolitre seconde",
+            "plural":"kilolitres seconde"
         },
         "kl/min":{
-            "singular":"kilolitre par minute",
-            "plural":"kilolitres par minute"
+            "singular":"kilolitre minute",
+            "plural":"kilolitres minute"
         },
         "kl/h":{
-            "singular":"kilolitre par heure",
-            "plural":"kilolitres par heure"
+            "singular":"kilolitre heure",
+            "plural":"kilolitres heure"
         },
         "m3/s":{
-            "singular":"mètre cube par seconde",
-            "plural":"mètres cubes par seconde"
+            "singular":"mètre cube seconde",
+            "plural":"mètres cubes seconde"
         },
         "m3/min":{
-            "singular":"mètre cube par minute",
-            "plural":"mètres cubes par minute"
+            "singular":"mètre cube minute",
+            "plural":"mètres cubes minute"
         },
         "m3/h":{
-            "singular":"mètre cube par heure",
-            "plural":"mètres cubes par heure"
+            "singular":"mètre cube heure",
+            "plural":"mètres cubes heure"
         },
         "km3/s":{
-            "singular":"kilomètre cube par seconde",
-            "plural":"kilomètres cubes par seconde"
+            "singular":"kilomètre cube seconde",
+            "plural":"kilomètres cubes seconde"
         },
         "in3/s":{
-            "singular":"pouce cube par seconde",
-            "plural":"pouces cubes par seconde"
+            "singular":"pouce cube seconde",
+            "plural":"pouces cubes seconde"
         },
         "in3/min":{
-            "singular":"pouce cube par minute",
-            "plural":"pouces cubes par minute"
+            "singular":"pouce cube minute",
+            "plural":"pouces cubes minute"
         },
         "in3/h":{
-            "singular":"pouce cube par heure",
-            "plural":"pouces cubes par heure"
+            "singular":"pouce cube heure",
+            "plural":"pouces cubes heure"
         },
         "fl-oz/s":{
-            "singular":"once liquide par seconde",
-            "plural":"onces liquides par seconde"
+            "singular":"once liquide seconde",
+            "plural":"onces liquides seconde"
         },
         "fl-oz/min":{
-            "singular":"once liquide par minute",
-            "plural":"onces liquides par minute"
+            "singular":"once liquide minute",
+            "plural":"onces liquides minute"
         },
         "fl-oz/h":{
-            "singular":"once liquide par heure",
-            "plural":"onces liquides par heure"
+            "singular":"once liquide heure",
+            "plural":"onces liquides heure"
         },
         "ft3/s":{
-            "singular":"pouce cube par seconde",
-            "plural":"pouces cubes par seconde"
+            "singular":"pouce cube seconde",
+            "plural":"pouces cubes seconde"
         },
         "ft3/min":{
-            "singular":"pouce cube par minute",
-            "plural":"pouces cubes par minute"
+            "singular":"pouce cube minute",
+            "plural":"pouces cubes minute"
         },
         "ft3/h":{
-            "singular":"pouce cube par heure",
-            "plural":"pouces cubes par heure"
+            "singular":"pouce cube heure",
+            "plural":"pouces cubes heure"
         },
         "yd3/s":{
-            "singular":"yard cube par seconde",
-            "plural":"yards cubes par seconde"
+            "singular":"yard cube seconde",
+            "plural":"yards cubes seconde"
         },
         "yd3/min":{
-            "singular":"yard cube par minute",
-            "plural":"yards cubes par minute"
+            "singular":"yard cube minute",
+            "plural":"yards cubes minute"
         },
         "yd3/h":{
-            "singular":"yard cube par heure",
-            "plural":"yards cubes par heure"
+            "singular":"yard cube heure",
+            "plural":"yards cubes heure"
+        },
+        "tsp/s":{
+            "singular":"cuillère à café seconde",
+            "plural":"cuillères à café seconde"
         },
         "m/s":{
-            "singular":"mètre par seconde",
-            "plural":"mètres par seconde"
+            "singular":"mètre seconde",
+            "plural":"mètres seconde"
         },
         "km/h":{
-            "singular":"kilomètre par heure",
-            "plural":"kilomètres par heure"
+            "singular":"kilomètre heure",
+            "plural":"kilomètres heure"
         },
         "mph":{
-            "singular":"mile par heure",
-            "plural":"miles par heure"
+            "singular":"mile heure",
+            "plural":"miles heure"
         },
         "knot":{
             "singular":"noeud",
             "plural":"noeuds"
         },
         "ft/s":{
-            "singular":"pied par seconde",
-            "plural":"pieds par seconde"
+            "singular":"pied seconde",
+            "plural":"pieds seconde"
         },
         "Pa":{
             "singular":"Pascal",
