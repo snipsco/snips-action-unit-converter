@@ -1,0 +1,46 @@
+
+> snips-action-unit-converter@0.0.1 test /Users/audreycigolotti/Documents/snips-action-unit-converter
+> jest '^.*\.spec\.[jt]s$'
+
+  console.log tests/helpers/setup.ts:25
+    Launching mosquitto on port [51843]
+
+  console.log tests/helpers/setup.ts:28
+    Mosquitto ready!
+
+  console.log tests/helpers/setup.ts:63
+    b4each
+
+  console.log tests/test.spec.ts:7
+    test1
+
+  console.log tests/helpers/session.ts:75
+    start
+
+  console.log tests/helpers/session.ts:78
+    afterendsess
+
+  console.log tests/helpers/session.ts:36
+    publish
+
+  console.log tests/helpers/session.ts:81
+    PM
+
+  console.log tests/test.spec.ts:18
+    beforeEndSess
+
+  console.log tests/helpers/session.ts:104
+    end.4next
+
+  console.log tests/helpers/session.ts:54
+    NEXT MESSAGE
+
+  console.log tests/helpers/setup.ts:67
+    aftereach
+
+  console.log tests/helpers/setup.ts:75
+    Mosquitto killed.
+
+  console.log tests/helpers/setup.ts:77
+    Hermes killed.
+

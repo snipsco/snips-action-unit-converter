@@ -17,8 +17,6 @@ export type KnownSlots = {
 }
 
 export const doConvertHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 1 }) {
-    console.log('blabla')
-    logger.debug('blibli')
     //const i18n = i18nFactory.get()
 
     let unitFrom, unitTo, amountToConvert

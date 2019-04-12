@@ -23,12 +23,12 @@ npm run dev
 # 1) Lint, transpile and test.
 npm start
 # 2) Run the action.
-node action-snips.js
+node action-unit-converter.js
 ```
 
 ## Debug
 
-In the `action-snips.js` file:
+In the `action-unit-converter.js` file:
 
 ```js
 // Uncomment this line to print everything

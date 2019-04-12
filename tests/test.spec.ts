@@ -3,8 +3,7 @@ require('./helpers/setup').bootstrap()
 import Session from './helpers/session'
 import { createUnitFromSlot, createUnitToSlot, createAmountSlot } from './utils'
 
-it.only('should query a conversion between a unit and an amount (45km)and another(mi)', async () => {
-    console.log('test1')
+it('Simple conversion: should query a conversion between a unit and an amount (45km)and another(mi)', async () => {
         const session = new Session()
         await session.start({
             intentName: 'snips-assistant:UnitConvert',
@@ -15,25 +14,19 @@ it.only('should query a conversion between a unit and an amount (45km)and anothe
                 createAmountSlot(45),
             ]
         })
-        console.log('beforeEndSess')
         const endSessionMessage = await session.end()
-        console.log('afterEndSess')
-        //expect(endSessionMessage).toBe('test')
         const { key, options } = JSON.parse(endSessionMessage.text || '')
         expect(key).toBe('doConvert.conversion')
         expect(options.amount).toBe(45)   
-        expect(options.unitFrom).toBe('km')
-        expect(options.unitTo).toBe('mi')
-        expect(options.amountResult).toBe(27.962)
+        
+        expect(JSON.parse(options.unitFrom).key ).toBe('units.km.plural')
+        expect(JSON.parse(options.unitTo).key ).toBe('units.mi.plural')
 
-
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
-
+        expect(options.amountResult).toBe('27.962')
 })
 
-/*
-it('should make a conversion between a unit (l) and another (ml) without amount', async () => {
+
+it('Simple conversion (/wout amount): should make a conversion between a unit (l) and another (ml) without amount', async () => {
     const session = new Session()
     await session.start({
         intentName: 'snips-assistant:UnitConvert',
@@ -49,12 +42,12 @@ it('should make a conversion between a unit (l) and another (ml) without amount'
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.conversion')
     expect(options.amount).toBe(1)
-    expect(options.unitFrom).toBe('l')
-    expect(options.unitTo).toBe('ml')
-    expect(options.amountResult).toBe(1000)
+    expect(JSON.parse(options.unitFrom).key ).toBe('units.l.singular')
+    expect(JSON.parse(options.unitTo).key ).toBe('units.ml.plural')
+    expect(options.amountResult).toBe('1000')
 })
-*/
-it('should return an error telling that a conversion between two different measure is impossible (digital in pressure)', async () => {
+
+it('Different measurement types: should return an error telling that a conversion between two different measure is impossible (digital in pressure)', async () => {
     const session = new Session()
     await session.start({
         intentName: 'snips-assistant:UnitConvert',
@@ -69,14 +62,12 @@ it('should return an error telling that a conversion between two different measu
     // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
-    expect(key).toBe('doConvert.conversion')
-    expect(options.amount).toBe(1)
-    expect(options.unitFrom).toBe('l')
-    expect(options.unitTo).toBe('ml')
-    expect(options.amountResult).toBe(1000)
-})/*
-*//*
-it('should tell that the unit_to is not handle by the converter (you can\'t convert amperes into bananas)', async () => {
+    expect(key).toBe('doConvert.notSameMeasurement')
+    expect(options.unitTypeFrom).toBe('digital')
+    expect(options.unitTypeTo).toBe('pressure') 
+})
+
+it('Not handled unit_to: should tell that the unit_to is not handle by the converter (you can\'t convert amperes into bananas)', async () => {
     const session = new Session()
     await session.start({
         intentName: 'snips-assistant:UnitConvert',
@@ -91,12 +82,10 @@ it('should tell that the unit_to is not handle by the converter (you can\'t conv
     // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
-    expect(key).toBe('unit.info')
-    expect(options.name).toBe('bulbasaur')
-    expect(options.amount).toBe(27.962)
-})*//*
-*//*
-it('should tell that the unit_from is not handle by the converter (you can\'t convert apples into meters)', async () => {
+    expect(key).toBe('doConvert.unitToNotHandled')
+})
+
+it('Not handled unit_from: should tell that the unit_from is not handle by the converter (you can\'t convert apples into meters)', async () => {
     const session = new Session()
     await session.start({
         intentName: 'snips-assistant:UnitConvert',
@@ -110,12 +99,10 @@ it('should tell that the unit_from is not handle by the converter (you can\'t co
     // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
-    expect(key).toBe('unit.info')
-    expect(options.name).toBe('bulbasaur')
-    expect(options.amount).toBe(27.962)
-})*/
-/*
-it('should ask again for unit_from (while keeping the other slots if provided)', async () => {
+    expect(key).toBe('doConvert.unitFromNotHandled')
+})
+
+it('Missing unit_from(once): should ask again for unit_from (while keeping the other slots if provided) and do the conversion', async () => {
     const session = new Session()
     await session.start({
         intentName: 'snips-assistant:UnitConvert',
@@ -133,16 +120,45 @@ it('should ask again for unit_from (while keeping the other slots if provided)',
             createUnitFromSlot('week')
         ]
     })
-    const endSessionMessage = await session.end()
-    const { key, options } = JSON.parse(endSessionMessage.text || '')
+    var { key, options } = JSON.parse(continueSessionMessage.text || '')
     expect(key).toBe('doConvert.missingUnitFrom')
+    const endSessionMessage = await session.end()
+    var { key, options } = JSON.parse(endSessionMessage.text || '')
+    
     expect(options.amount).toBe(1)   
-    expect(options.unitFrom).toBe('week')
-    expect(options.unitTo).toBe('d')
-    expect(options.amountResult).toBe(7)
-})*/
-/*
-it('should say that the conversion between same units is useless (and don\'t do the conversion)', async () => {
+    expect(JSON.parse(options.unitFrom).key ).toBe('units.week.singular')
+    expect(JSON.parse(options.unitTo).key ).toBe('units.d.plural')
+    expect(options.amountResult).toBe('7')
+})
+
+it('Missing unit_from(twice): should ask again for unit_from, and stop', async () => {
+    const session = new Session()
+    await session.start({
+        intentName: 'snips-assistant:UnitConvert',
+        input: 'convert into days',
+        slots: [
+            createUnitToSlot('d')
+        ]
+    })
+    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
+    // (basically the arguments passed to i18n, in serialized string form)
+    const continueSessionMessage = await session.continue({
+        intentName: 'snips-assistant:UnitConvert',
+        input: 'convert into days',
+        slots: [
+            createUnitToSlot('d')
+        ]
+    })
+    var { key, options } = JSON.parse(continueSessionMessage.text || '')
+    expect(key).toBe('doConvert.missingUnitFrom')
+    const endSessionMessage = await session.end()
+    var { key, options } = JSON.parse(endSessionMessage.text || '')
+    
+    expect(key).toBe('doConvert.missingUnitFromTwice')
+
+})
+
+it('Same units: should say that the conversion between same units is useless (and don\'t do the conversion)', async () => {
     const session = new Session()
     await session.start({
         intentName: 'snips-assistant:UnitConvert',
@@ -157,7 +173,5 @@ it('should say that the conversion between same units is useless (and don\'t do 
     // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
-    expect(key).toBe('unit.info')
-    expect(options.name).toBe('bulbasaur')
-    expect(options.amount).toBe(27.962)
-})*/
+    expect(key).toBe('doConvert.sameUnits')
+})

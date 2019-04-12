@@ -1,4 +1,4 @@
-import { Dialog, NluSlot } from 'hermes-javascript'
+import { Dialog, NluSlot, slotType } from 'hermes-javascript'
 
 type CustomSlot = NluSlot<typeof Dialog.enums.slotType.custom>
 
@@ -36,14 +36,14 @@ export function createUnitToSlot(name: string): CustomSlot {
     }
 }
 
-export function createAmountSlot(amount: number) {
+export function createAmountSlot(amount: number): NluSlot<slotType.number> {
     return {
         slotName: 'amount',
         entity: 'snips/number',
         confidenceScore: 1,
-        rawValue: amount,
+        rawValue: '' + amount,
         value: {
-            kind: 'Number',
+            kind: Dialog.enums.slotType.number,
             value: amount
         },
         range: {

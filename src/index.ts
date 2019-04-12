@@ -13,7 +13,6 @@ export default function ({
             try {
                 // Bootstrap config, locale, i18n…
                 await bootstrap(bootstrapOptions)
-
                 const dialog = hermes.dialog()
 
 
