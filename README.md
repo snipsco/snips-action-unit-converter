@@ -1,5 +1,4 @@
 # snips-action-unit-converter
-# Unit converter
 #### Snips action code for the Unit Conversion app.
 
 ## Setup
