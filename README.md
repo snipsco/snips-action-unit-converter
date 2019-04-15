@@ -1,5 +1,6 @@
 # snips-action-unit-converter
-#### Converts units
+# Unit converter
+#### Snips action code for the Unit Conversion app.
 
 ## Setup
 
@@ -47,3 +48,12 @@ npm run test
 
 - **http**: see `tests/httpMocks/index.ts`
 - **i18n**: see `src/factories/i18nFactory.ts`
+
+## Demo cases
+#### This app only provide the conversion between two specified units.
+
+Convert a specific amount to the destination unit
+> *Hey Snips, convert 6 kilometers in miles, please*
+
+Give the conversion between a unit and another
+> *Hey Snips, one gallon is how many liters?*
