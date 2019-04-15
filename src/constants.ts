@@ -5,6 +5,7 @@ export const LANGUAGE_MAPPINGS = {
     english: 'en',
     french: 'fr'
 }
+export const SLOT_CONFIDENCE_THRESHOLD = 0.3
 export const UNITS = [
     {
         assistantKey: 'mm',

@@ -43,7 +43,9 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
      * @return Rounded value or not
      */
     
-    if (subresult>=0.1){
+    if (subresult>=0.0001){
+        return subresult = Math.round(subresult * 10000) / 10000
+    } else if (subresult>= 0.001){
         return subresult = Math.round(subresult * 1000) / 1000
     } else {
         let regexFilter: RegExp = /^[0-9]*\.0*[^0][0-9]{2,}$/;
@@ -82,7 +84,8 @@ export async function chooseBestNotation(result:number, unit:string): Promise<st
             }
 
         } else {
-            strResult = result.toString()
+            var roundedVal = (result * 1000) / 1000
+            strResult = roundedVal.toString()
         }
 
         let regexPoint: RegExp = /^[0-9]+\.{1}[0-9]+.*$/

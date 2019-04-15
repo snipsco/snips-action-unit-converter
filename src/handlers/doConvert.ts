@@ -1,11 +1,10 @@
-import { getPokemon } from '../api'
 import { i18nFactory, configFactory } from '../factories'
 import { message, translation, slot } from '../utils'
 import { logger, CustomSlot} from '../utils'
 import { Handler } from './index'
 import { Dialog, Hermes, NluSlot, slotType } from 'hermes-javascript'
 import convert = require('convert-units')
-import { UNITS } from '../constants'
+import { UNITS, SLOT_CONFIDENCE_THRESHOLD } from '../constants'
 import { chooseBestTts, chooseBestRoundedValue, chooseBestNotation, isUnitHandled, isOzMassOrVolume } from './common'
 
 export type KnownSlots = {
@@ -17,12 +16,11 @@ export type KnownSlots = {
 }
 
 export const doConvertHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 1 }) {
-    //const i18n = i18nFactory.get()
 
     let unitFrom, unitTo, amountToConvert
 
     if(!('amount' in knownSlots)){
-        const amountSlot: NluSlot<slotType.number> | null = message.getSlotsByName(msg, 'amount', { onlyMostConfident:true })
+        const amountSlot: NluSlot<slotType.number> | null = message.getSlotsByName(msg, 'amount', { onlyMostConfident:true, threshold: SLOT_CONFIDENCE_THRESHOLD})
 
         if(amountSlot){
             amountToConvert = amountSlot.value.value 
@@ -35,7 +33,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
     }
 
     if(!('unit_from' in knownSlots)){
-        const unitFromSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_from', { onlyMostConfident:true })
+        const unitFromSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_from', { onlyMostConfident:true, threshold: SLOT_CONFIDENCE_THRESHOLD })
 
         if(unitFromSlot){
             unitFrom = unitFromSlot.value.value
@@ -45,8 +43,9 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         unitFrom = knownSlots.unit_from
     }
 
+    logger.info('\tUNIT_from:', unitFrom)
     if(!('unit_to' in knownSlots)){
-        const unitToSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_to', { onlyMostConfident:true })
+        const unitToSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_to', { onlyMostConfident:true, threshold: SLOT_CONFIDENCE_THRESHOLD })
 
         if(unitToSlot){
             unitTo = unitToSlot.value.value 
@@ -55,6 +54,8 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         logger.info('\tunit_to from previous attempt :', knownSlots.unit_to)
         unitTo = knownSlots.unit_to
     }
+
+    logger.info('\tUNIT_to:', unitTo)
 
     if(!unitFrom){
 
@@ -88,7 +89,11 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         }
         
 
-    } else if (unitFrom === unitTo){
+    } else if (!unitTo){
+        flow.end()
+        return translation.randomTranslation('doConvert.missingUnitTo', {})
+    }    
+        else if (unitFrom === unitTo){
         flow.end()
         return translation.randomTranslation('doConvert.sameUnits', {})
     } else {
@@ -108,17 +113,11 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
                 return translation.randomTranslation('doConvert.unitToNotHandled', {})
             }
             
-            if(!unitTo){
-                // Converting to best unit
-                var subresult = convert(amountToConvert).from(apiUnitFrom).toBest()
-                unitTo = subresult.unit
-                var result = await chooseBestRoundedValue(subresult.val)
-            } else {
-                var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
-                logger.info('\tconvert:', subresult)
-                var result = await chooseBestRoundedValue(subresult)
-                logger.info('\tresult:', result)
-            }
+            var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
+            logger.info('\tconvert:', subresult)
+            var result = await chooseBestRoundedValue(subresult)
+            logger.info('\tresult:', result)
+            
 
             const unitFromTts = await chooseBestTts(amountToConvert, unitFrom)
             const unitToTts = await chooseBestTts(result, unitTo)
