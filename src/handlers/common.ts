@@ -43,8 +43,9 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
      * @return Rounded value or not
      */
     
-    if (subresult>=0.0001){
-        return subresult = Math.round(subresult * 10000) / 10000
+    if (subresult>=0.001){
+        return subresult = Math.round(subresult * 100) / 100
+        
     } else if (subresult>= 0.001){
         return subresult = Math.round(subresult * 1000) / 1000
     } else {

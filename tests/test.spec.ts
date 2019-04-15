@@ -17,12 +17,12 @@ it('Simple conversion: should query a conversion between a unit and an amount (4
         const endSessionMessage = await session.end()
         const { key, options } = JSON.parse(endSessionMessage.text || '')
         expect(key).toBe('doConvert.conversion')
-        expect(options.amount).toBe(45)   
+        expect(options.amount).toBe('45')   
         
         expect(JSON.parse(options.unitFrom).key ).toBe('units.km.plural')
         expect(JSON.parse(options.unitTo).key ).toBe('units.mi.plural')
 
-        expect(options.amountResult).toBe('27.962')
+        expect(options.amountResult).toBe('27.96')
 })
 
 
@@ -41,7 +41,7 @@ it('Simple conversion (/wout amount): should make a conversion between a unit (l
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.conversion')
-    expect(options.amount).toBe(1)
+    expect(JSON.parse(options.amount).key).toBe('units.l.determiner')
     expect(JSON.parse(options.unitFrom).key ).toBe('units.l.singular')
     expect(JSON.parse(options.unitTo).key ).toBe('units.ml.plural')
     expect(options.amountResult).toBe('1000')
@@ -63,8 +63,8 @@ it('Different measurement types: should return an error telling that a conversio
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.notSameMeasurement')
-    expect(options.unitTypeFrom).toBe('digital')
-    expect(options.unitTypeTo).toBe('pressure') 
+    expect(JSON.parse(options.unitTypeFrom).key).toBe('measures.digital')
+    expect(JSON.parse(options.unitTypeTo).key).toBe('measures.pressure') 
 })
 
 it('Not handled unit_to: should tell that the unit_to is not handle by the converter (you can\'t convert amperes into bananas)', async () => {
@@ -102,6 +102,23 @@ it('Not handled unit_from: should tell that the unit_from is not handle by the c
     expect(key).toBe('doConvert.unitFromNotHandled')
 })
 
+it('Missing unit_to: break conversation saying that this unit is missing', async () => {
+    const session = new Session()
+    await session.start({
+        intentName: 'snips-assistant:UnitConvert',
+        input: 'I want to convert 4 amperes ',
+        slots: [
+            createUnitFromSlot('A'),
+            createAmountSlot(4)
+        ]
+    })
+    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
+    // (basically the arguments passed to i18n, in serialized string form)
+    const endSessionMessage = await session.end()
+    const { key, options } = JSON.parse(endSessionMessage.text || '')
+    expect(key).toBe('doConvert.missingUnitTo')
+})
+
 it('Missing unit_from(once): should ask again for unit_from (while keeping the other slots if provided) and do the conversion', async () => {
     const session = new Session()
     await session.start({
@@ -125,7 +142,7 @@ it('Missing unit_from(once): should ask again for unit_from (while keeping the o
     const endSessionMessage = await session.end()
     var { key, options } = JSON.parse(endSessionMessage.text || '')
     
-    expect(options.amount).toBe(1)   
+    expect(JSON.parse(options.amount).key).toBe('units.week.determiner')   
     expect(JSON.parse(options.unitFrom).key ).toBe('units.week.singular')
     expect(JSON.parse(options.unitTo).key ).toBe('units.d.plural')
     expect(options.amountResult).toBe('7')
