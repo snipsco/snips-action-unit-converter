@@ -19,6 +19,8 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
 
     let unitFrom, unitTo, amountToConvert
 
+    logger.info('\tdoConvertHandle, SLOT_CONFIDENCE_THRESHOLD = ', SLOT_CONFIDENCE_THRESHOLD)
+
     if(!('amount' in knownSlots)){
         const amountSlot: NluSlot<slotType.number> | null = message.getSlotsByName(msg, 'amount', { onlyMostConfident:true, threshold: SLOT_CONFIDENCE_THRESHOLD})
 
@@ -28,7 +30,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             amountToConvert = 1
         }
     } else {
-        logger.info('\tamount from previous attempt :', knownSlots.amount)
+        logger.info('\tAmount from previous attempt :', knownSlots.amount)
         amountToConvert = knownSlots.amount
     }
 
@@ -59,6 +61,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
 
     if(!unitFrom){
 
+        // If unit_from isn't provided the first time, the assistant does one feedback to ask for it again.
         if(!('alreadyAskedBack' in knownSlots)){
             knownSlots.alreadyAskedBack = true
             flow.continue('snips-assistant:UnitConvert', (msg, flow) => {
@@ -67,11 +70,6 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
                     depth: knownSlots.depth + 1,
                     alreadyAskedBack: knownSlots.alreadyAskedBack
                 } as any)
-    
-                if (!slot.missing(unitFrom)) {
-                    logger.info('\tAdding unit from :', unitFrom)
-                    slotsToBeSent.unit_from = unitFrom
-                }
     
                 if (!slot.missing(unitTo)) {
                     logger.info('\tAdding unit to :', unitTo)
@@ -88,18 +86,18 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             return translation.randomTranslation('doConvert.missingUnitFromTwice', {})
         }
         
-
     } else if (!unitTo){
         flow.end()
         return translation.randomTranslation('doConvert.missingUnitTo', {})
-    }    
-        else if (unitFrom === unitTo){
+    } else if (unitFrom === unitTo){
         flow.end()
         return translation.randomTranslation('doConvert.sameUnits', {})
     } else {
+
         flow.end()
 
-        if((unitFrom == 'oz')&&(unitTo)){
+        // If one of the unit is a ounce, we have to determine the user means a mass or a volume 
+        if(unitFrom == 'oz'){
             unitFrom = await isOzMassOrVolume(unitTo)
         } else if(unitTo == 'oz'){
             unitTo = await isOzMassOrVolume(unitFrom)
@@ -107,6 +105,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
 
         try{
             let apiUnitFrom, apiUnitTo
+
             if(!(apiUnitFrom = await isUnitHandled(unitFrom))){
                 return translation.randomTranslation('doConvert.unitFromNotHandled', {})
             } else if(!(apiUnitTo = await isUnitHandled(unitTo))&&(unitTo)){
@@ -114,11 +113,8 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             }
             
             var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
-            logger.info('\tconvert:', subresult)
             var result = await chooseBestRoundedValue(subresult)
-            logger.info('\tresult:', result)
             
-
             const unitFromTts = await chooseBestTts(amountToConvert, unitFrom)
             const unitToTts = await chooseBestTts(result, unitTo)
             const strAmount = await chooseBestNotation(amountToConvert, unitFrom)

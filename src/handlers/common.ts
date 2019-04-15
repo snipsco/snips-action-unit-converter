@@ -44,10 +44,10 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
      */
     
     if (subresult>=0.001){
-        return subresult = Math.round(subresult * 100) / 100
+        return subresult = Math.round(subresult * 1000) / 1000
         
     } else if (subresult>= 0.001){
-        return subresult = Math.round(subresult * 1000) / 1000
+        return subresult = Math.round(subresult * 10000) / 10000
     } else {
         let regexFilter: RegExp = /^[0-9]*\.0*[^0][0-9]{2,}$/;
         let strSubresult = subresult.toString()
@@ -61,6 +61,13 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
 }
 
 export async function chooseBestNotation(result:number, unit:string): Promise<string>{
+    /**
+     * Return a beautiful string in order that the tts voice doesn't sound (too) weird
+     * 
+     * @param result the amount to make beautiful
+     * @param unit its corresponding unit, for choosing the best determiner
+     * @return beautiful handled amount for tts
+     */
     const config = configFactory.get()
     
     let strResult
@@ -117,6 +124,12 @@ export async function isUnitHandled(unit:string): Promise<string|undefined>{
 }
 
 export async function isOzMassOrVolume(unitElse:string|undefined): Promise<string>{
+    /**
+     * Determine if the user meant a once as a volume or a mass according to the other unit provided
+     * 
+     * @param unitElse The other unit understood by the assistant
+     * @return apiKey unit symbol 
+     */
     if(convert().describe(unitElse).measure == 'volume'){
         return 'fl-oz'
     } else {
@@ -133,38 +146,3 @@ export async function getAssistantKey(unit: string): Promise<string|undefined>{
     } 
     return assistantUnit
 }
-
-export async function generateTtsMeasures(possibleMeasures: string[]): Promise<string|undefined>{
-    let possibleMeasuresTts : string[] = []
-
-    for (let item in possibleMeasures){
-        var i18nTtsPath = 'measures.' + possibleMeasures[item]
-        var checkMeasure = translation.randomTranslation(i18nTtsPath, {})
-        if(checkMeasure.indexOf('measures.') == -1){
-            possibleMeasuresTts.push(translation.randomTranslation(checkMeasure, {}))
-        }
-    }
-
-    let beautifulForm = possibleMeasuresTts.slice(0,-1).join(', ') + " and " + possibleMeasuresTts[possibleMeasuresTts.length-1]
-    return beautifulForm
-}
-
-export async function generateTtsUnits(possibleUnits: string[]): Promise<string>{
-    /**
-     * Choose between singular or plural according to the amount of the unit for better tts quality.
-     * 
-     * @param unit unit symbol to put in singular or plural version
-     * @return correct word to use
-     */
-    let possibleUnitsTts : string[] = []
-    for (let item in possibleUnits){
-        var possibleUnitApi = await getAssistantKey(possibleUnits[item])
-        if(possibleUnitApi){
-            var i18nTtsPath = 'units.' + possibleUnitApi + '.plural' 
-            possibleUnitsTts.push(translation.randomTranslation(i18nTtsPath, {}))
-        }
-    }
-    let beautifulForm = possibleUnitsTts.slice(0,-1).join(', ') + " and " + possibleUnitsTts[possibleUnitsTts.length-1]
-    return beautifulForm
-}
-

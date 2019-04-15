@@ -22,7 +22,7 @@ it('Simple conversion: should query a conversion between a unit and an amount (4
         expect(JSON.parse(options.unitFrom).key ).toBe('units.km.plural')
         expect(JSON.parse(options.unitTo).key ).toBe('units.mi.plural')
 
-        expect(options.amountResult).toBe('27.96')
+        expect(options.amountResult).toBe('27.962')
 })
 
 
@@ -36,8 +36,6 @@ it('Simple conversion (/wout amount): should make a conversion between a unit (l
             createUnitToSlot('ml')
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.conversion')
@@ -58,8 +56,6 @@ it('Different measurement types: should return an error telling that a conversio
             createAmountSlot(8)
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.notSameMeasurement')
@@ -78,8 +74,6 @@ it('Not handled unit_to: should tell that the unit_to is not handle by the conve
             createAmountSlot(4)
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.unitToNotHandled')
@@ -95,8 +89,6 @@ it('Not handled unit_from: should tell that the unit_from is not handle by the c
             createUnitToSlot('m'),
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.unitFromNotHandled')
@@ -112,8 +104,6 @@ it('Missing unit_to: break conversation saying that this unit is missing', async
             createAmountSlot(4)
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.missingUnitTo')
@@ -128,8 +118,6 @@ it('Missing unit_from(once): should ask again for unit_from (while keeping the o
             createUnitToSlot('d')
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const continueSessionMessage = await session.continue({
         intentName: 'snips-assistant:UnitConvert',
         input: 'From week',
@@ -157,8 +145,6 @@ it('Missing unit_from(twice): should ask again for unit_from, and stop', async (
             createUnitToSlot('d')
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const continueSessionMessage = await session.continue({
         intentName: 'snips-assistant:UnitConvert',
         input: 'convert into days',
@@ -186,8 +172,6 @@ it('Same units: should say that the conversion between same units is useless (an
             createAmountSlot(10)
         ]
     })
-    // In test mode, the i18n output is mocked as a JSON containing the i18n key and associated options.
-    // (basically the arguments passed to i18n, in serialized string form)
     const endSessionMessage = await session.end()
     const { key, options } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.sameUnits')

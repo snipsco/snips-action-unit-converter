@@ -1,5 +1,4 @@
 import { translation, logger } from '../utils'
-import { conversionPossibilitiesHandler } from './conversionPossibilities'
 import { FlowContinuation, IntentMessage, FlowActionReturn } from 'hermes-javascript'
 import { doConvertHandler } from './doConvert'
 
@@ -30,6 +29,5 @@ const handlerWrapper = (handler: Handler): Handler => (
 
 // Add handlers here, and wrap them.
 export default {
-    doConvert: handlerWrapper(doConvertHandler),
-    conversionPossibilities: handlerWrapper(conversionPossibilitiesHandler)
+    doConvert: handlerWrapper(doConvertHandler)
 }

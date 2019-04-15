@@ -1,4 +1,4 @@
-import { i18nFactory, configFactory } from '../factories'
+/*import { i18nFactory, configFactory } from '../factories'
 import { message, translation, slot } from '../utils'
 import { logger, CustomSlot} from '../utils'
 import { Handler } from './index'
@@ -58,4 +58,4 @@ export const conversionPossibilitiesHandler: Handler = async function (msg, flow
         })
     }
 
-}
+}*/
