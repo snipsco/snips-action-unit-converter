@@ -5,6 +5,7 @@ export const LANGUAGE_MAPPINGS = {
     english: 'en',
     french: 'fr'
 }
+export const SLOT_CONFIDENCE_THRESHOLD = 0.3
 export const UNITS = [
     {
         assistantKey: 'mm',
@@ -65,6 +66,10 @@ export const UNITS = [
     {
         assistantKey:'mi2',
         apiKey:'mi2'
+    },
+    {
+        assistantKey:'yd2',
+        apiKey:'yd2'
     },
     {
         assistantKey:'mcg',
@@ -335,7 +340,7 @@ export const UNITS = [
         apiKey:'km/s'
     },
     {
-        assistantKey:'m/h',
+        assistantKey:'mph',
         apiKey:'m/h'
     },
     {
@@ -345,6 +350,10 @@ export const UNITS = [
     {
         assistantKey:'ft/s',
         apiKey:'ft/s'
+    },
+    {
+        assistantKey:'tsp/s',
+        apiKey:'tsp/s'
     },
     {
         assistantKey:'Pa',
@@ -383,6 +392,26 @@ export const UNITS = [
         apiKey:'Gb'
     },
     {
+        assistantKey:'Gb',
+        apiKey:'Tb'
+    },
+    {
+        assistantKey:'B',
+        apiKey:'B'
+    },
+    {
+        assistantKey:'KB',
+        apiKey:'KB'
+    },
+    {
+        assistantKey:'MB',
+        apiKey:'MB'
+    },
+    {
+        assistantKey:'GB',
+        apiKey:'GB'
+    },
+    {
         assistantKey:'TB',
         apiKey:'TB'
     },
@@ -409,5 +438,9 @@ export const UNITS = [
     {
         assistantKey:'kA',
         apiKey:'kA'
+    },
+    {
+        assistantKey:'ac',
+        apiKey:'ac'
     }
 ]

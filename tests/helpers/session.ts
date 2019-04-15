@@ -33,6 +33,7 @@ export default class Session {
     }
 
     async publishMessage ({ intentName, input, ...additionalFields }) {
+
         return new Promise(resolve => {
             this.mqtt.publish(`hermes/intent/${intentName}`, JSON.stringify({
                  sessionId: this.sessionId,
@@ -50,12 +51,16 @@ export default class Session {
     }
 
     nextMessage(): Promise<[string, ContinueSessionMessage | EndSessionMessage]> {
+
         return new Promise(resolve =>
             this.mqtt.once('message', (topic, message) => {
+                
                 resolve([ topic, JSON.parse(message.toString()) ])
             })
         )
     }
+
+    
 
     async start({
         intentName,
@@ -68,6 +73,7 @@ export default class Session {
         // Subscribe to the continueSession/endSession callbacks
         await this.subscribe('hermes/dialogueManager/continueSession')
         await this.subscribe('hermes/dialogueManager/endSession')
+
         // Publish an intent message
         this.publishMessage({ intentName, input, ...additionalFields })
     }
@@ -94,6 +100,7 @@ export default class Session {
         // Wait for the end session message
         const [ topic, message ] = await this.nextMessage()
         // Asserts
+
         expect(topic).toBe('hermes/dialogueManager/endSession')
         expect(message.sessionId).toBe(this.sessionId)
         await this.unsubscribe('hermes/dialogueManager/continueSession')

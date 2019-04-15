@@ -8,7 +8,594 @@
         "APIRequest": "Désolé, le service distant est injoignable.",
         "unspecific": "Oups, quelque chose s'est mal passé."
     },
-    "pokemon": {
-        "info": "Le pokémon {{ name }} pèse {{ weight }} kilos et mesure {{ height }} centimètres."
+    "doConvert": {
+        "info": "L'unité de départ trouvée est {{ unitFrom }}, celle de destination est {{ unitTo }}",
+        "conversion": [
+            "{{ amount }} {{ unitFrom }} égal {{ amountResult }} {{ unitTo }}"
+        ],
+        "sameUnits": [
+            "Je crains que convertir une unité dans la même ne soit pas vraiment utile.", 
+            "Je suis désolé mais j'ai l'impression que vous avez choisis les deux mêmes unités."
+        ],
+        "notSameMeasurement":"Je suis désolé, mais la conversion entre {{ unitTypeFrom }} et {{ unitTypeTo }} est impossible.",
+        "unitFromNotHandled":[
+            "Je crains que je ne connais pas l'unité originale.",
+            "Désolé, mais je ne connais pas l'une des unités."
+        ],
+        "unitToNotHandled":[
+            "Je crains que je ne peux pas encore convertir dans cette unité.",
+            "Désolé, mais je ne connais pas l'une des unités."
+        ],
+        "missingUnitFrom": [
+            "Désolé, mais je n'ai pas compris depuis qu'elle unité souhaitez-vous convertir, essayez encore !",
+            "Je crains que je n'ai pas compris depuis qu'elle unité vous souhaitez convertir.",
+            "Depuis qu'elle unité souhaitez vous convertir ?"
+        ],
+        "missingUnitFromTwice": "Vous n'avez pas fournit l'unité manquante. Désolé mais je ne peux vous aider.",
+        "missingUnitTo": "Il manque l'unité dans laquelle vous souhaitez convertir."
+    },
+    "conversionPossibilities": {
+        "generalInfo": "Vous pouvez me demander de faire des conversiosn de {{ possibilities }}.",
+        "unitPossibilities": "Je peux convertir des {{ unit }} en {{ possibilities }}.",
+        "measurementPossibilities": "Je peux convertir {{ measurement }} en {{ possibilities }}.",
+        "unitUnknown": "Je crains que je ne connais pas  cette unité, désolé.",
+        "measureUnknown": "Je crains que je ne connais pas ce type de mesure, désolé.",
+        "caseOunces":"Ounces can be meant as a mass or a volume."
+    },
+    "measures":{
+        "length":"une longueur",
+        "area":"une aire",
+        "mass":"une masse",
+        "volume":"un volume",
+        "temperature":"une température",
+        "time":"un temps",
+        "digital":"une unité de stockage numérique",
+        "speed":"une vitesse",
+        "pressure":"une pression",
+        "current":"un courant",
+        "voltage":"un voltage",
+        "volumeFlowRate":"un débit volumique"
+    },
+    "power10":"{{ beforeResult }} fois 10 puissance {{ postResult }}",
+    "units":{
+        "mm":{
+            "singular":"millimètre",
+            "plural":"millimètres",
+            "determiner":"un"
+        },
+        "cm":{
+            "singular":"centimètre",
+            "plural":"centimètres",
+            "determiner":"un"
+        },
+        "m":{
+            "singular":"mètre",
+            "plural":"mètres",
+            "determiner":"un"
+        },
+        "km":{
+            "singular":"kilomètres",
+            "plural":"kilomètres",
+            "determiner":"un"
+        },
+        "in":{
+            "singular":"pouce",
+            "plural":"pouces",
+            "determiner":"un"
+        },
+        "ft":{
+            "singular":"pied",
+            "plural":"pieds",
+            "determiner":"un"
+        },
+        "mi":{
+            "singular":"mile",
+            "plural":"miles",
+            "determiner":"un"
+        },
+        "mm2":{
+            "singular":"millimètre carré",
+            "plural":"millimètres carrés",
+            "determiner":"un"
+        },
+        "cm2":{
+            "singular":"centimètre carré",
+            "plural":"centimètres carrés",
+            "determiner":"un"
+        },
+        "m2":{
+            "singular":"mètre carré",
+            "plural":"mètres carrés",
+            "determiner":"un"
+        },
+        "km2":{
+            "singular":"kilomètre carré",
+            "plural":"kilomètres carrés",
+            "determiner":"un"
+        },
+        "ha":{
+            "singular":"hectare",
+            "plural":"hectares",
+            "determiner":"un"
+        },
+        "in2":{
+            "singular":"pouce carré",
+            "plural":"pouces carrés",
+            "determiner":"un"
+        },
+        "ft2":{
+            "singular":"pied carré",
+            "plural":"pieds carrés",
+            "determiner":"un"
+        },
+        "mi2":{
+            "singular":"mile carré",
+            "plural":"miles carrés",
+            "determiner":"un"
+        },
+        "mcg":{
+            "singular":"microgramme",
+            "plural":"microgrammes",
+            "determiner":"un"
+        },
+        "mg":{
+            "singular":"milligramme",
+            "plural":"milligrammes",
+            "determiner":"un"
+        },
+        "g":{
+            "singular":"gramme",
+            "plural":"grammes",
+            "determiner":"un"
+        },
+        "kg":{
+            "singular":"kilogramme",
+            "plural":"kilogrammes",
+            "determiner":"un"
+        },
+        "oz":{
+            "singular":"once",
+            "plural":"onces",
+            "determiner":"une"
+        },
+        "lb":{
+            "singular":"livre",
+            "plural":"livres",
+            "determiner":"une"
+        },
+        "t":{
+            "singular":"tonne",
+            "plural":"tonnes",
+            "determiner":"une"
+        },
+        "mt":{
+            "singular":"tonne",
+            "plural":"tonnes",
+            "determiner":"une"
+        },
+        "mm3":{
+            "singular":"millimètre cube",
+            "plural":"millimètres cubes",
+            "determiner":"un"
+        },
+        "cm3":{
+            "singular":"centimètre cube",
+            "plural":"centimètres cubes",
+            "determiner":"un"
+        },
+        "m3":{
+            "singular":"mètre cube",
+            "plural":"mètres cubes",
+            "determiner":"un"
+        },
+        "km3":{
+            "singular":"kilomètre cube",
+            "plural":"kilomètres cubes",
+            "determiner":"un"
+        },
+        "in3":{
+            "singular":"pouce cube",
+            "plural":"pouces cubes",
+            "determiner":"un"
+        },
+        "ft3":{
+            "singular":"pied cube",
+            "plural":"pieds cubes",
+            "determiner":"un"
+        },
+        "yd3":{
+            "singular":"yard cube",
+            "plural":"yards cubes",
+            "determiner":"un"
+        },
+        "ml":{
+            "singular":"millilitre",
+            "plural":"millilitres",
+            "determiner":"un"
+        },
+        "cl":{
+            "singular":"centilitre",
+            "plural":"centilitres",
+            "determiner":"un"
+        },
+        "l":{
+            "singular":"litre",
+            "plural":"litres",
+            "determiner":"un"
+        },
+        "kl":{
+            "singular":"kilolitre",
+            "plural":"kilolitres",
+            "determiner":"un"
+        },
+        "tsp":{
+            "singular":"cuillère à café",
+            "plural":"cuillières à café",
+            "determiner":"une"
+        },
+        "tbsp":{
+            "singular":"cuillère à soupe",
+            "plural":"cuillières à soupe",
+            "determiner":"une"
+        },
+        "fl-oz":{
+            "singular":"once liquide",
+            "plural":"onces liquides",
+            "determiner":"une"
+        },
+        "cup":{
+            "singular":"tasse",
+            "plural":"tasses",
+            "determiner":"une"
+        },
+        "pt":{
+            "singular":"pinte",
+            "plural":"pintes",
+            "determiner":"une"
+        },
+        "qt":{
+            "singular":"quart",
+            "plural":"quarts",
+            "determiner":"un"
+        },
+        "gal":{
+            "singular":"gallon",
+            "plural":"gallons",
+            "determiner":"un"
+        },
+        "C":{
+            "singular":"degré Celsius",
+            "plural":"degrés Celsius",
+            "determiner":"un"
+        },
+        "F":{
+            "singular":"degré Fahrenheit",
+            "plural":"degrés Fahrenheit",
+            "determiner":"un"
+        },
+        "K":{
+            "singular":"degré Kelvin",
+            "plural":"degrés Kelvin",
+            "determiner":"un"
+        },
+        "ns":{
+            "singular":"nanoseconde",
+            "plural":"nanosecondes",
+            "determiner":"une"
+        },
+        "mu":{
+            "singular":"microseconde",
+            "plural":"microsecondes",
+            "determiner":"une"
+        },
+        "ms":{
+            "singular":"milliseconde",
+            "plural":"millisecondes",
+            "determiner":"une"
+        },
+        "s":{
+            "singular":"seconde",
+            "plural":"secondes",
+            "determiner":"une"
+        },
+        "min":{
+            "singular":"minute",
+            "plural":"minutes",
+            "determiner":"une"
+        },
+        "h":{
+            "singular":"heure",
+            "plural":"heures",
+            "determiner":"une"
+        },
+        "d":{
+            "singular":"jour",
+            "plural":"jours"
+        },
+        "week":{
+            "singular":"semaine",
+            "plural":"semaines",
+            "determiner":"une"
+        },
+        "month":{
+            "singular":"mois",
+            "plural":"mois",
+            "determiner":"un"
+        },
+        "year":{
+            "singular":"année",
+            "plural":"années",
+            "determiner":"une"
+        },
+        "mm3/s":{
+            "singular":"millimètre cube seconde",
+            "plural":"millimètres cubes seconde",
+            "determiner":"un"
+        },
+        "cm3/s":{
+            "singular":"centimètre cube seconde",
+            "plural":"centimètres cubes seconde",
+            "determiner":"un"
+        },
+        "ml/s":{
+            "singular":"millilitre seconde",
+            "plural":"millilitres seconde",
+            "determiner":"un"
+        },
+        "cl/s":{
+            "singular":"centilitre seconde",
+            "plural":"centilitres secondes",
+            "determiner":"un"
+        },
+        "dl/s":{
+            "singular":"décilitre seconde",
+            "plural":"décilitres seconde",
+            "determiner":"un"
+        },
+        "l/s":{
+            "singular":"litre seconde",
+            "plural":"litres seconde",
+            "determiner":"un"
+        },
+        "l/min":{
+            "singular":"litre minute",
+            "plural":"litres minute",
+            "determiner":"un"
+        },
+        "l/h":{
+            "singular":"litre heure",
+            "plural":"litres heure",
+            "determiner":"un"
+        },
+        "kl/s":{
+            "singular":"kilolitre seconde",
+            "plural":"kilolitres seconde",
+            "determiner":"un"
+        },
+        "kl/min":{
+            "singular":"kilolitre minute",
+            "plural":"kilolitres minute",
+            "determiner":"un"
+        },
+        "kl/h":{
+            "singular":"kilolitre heure",
+            "plural":"kilolitres heure",
+            "determiner":"un"
+        },
+        "m3/s":{
+            "singular":"mètre cube seconde",
+            "plural":"mètres cubes seconde",
+            "determiner":"un"
+        },
+        "m3/min":{
+            "singular":"mètre cube minute",
+            "plural":"mètres cubes minute",
+            "determiner":"un"
+        },
+        "m3/h":{
+            "singular":"mètre cube heure",
+            "plural":"mètres cubes heure",
+            "determiner":"un"
+        },
+        "km3/s":{
+            "singular":"kilomètre cube seconde",
+            "plural":"kilomètres cubes seconde",
+            "determiner":"un"
+        },
+        "in3/s":{
+            "singular":"pouce cube seconde",
+            "plural":"pouces cubes seconde",
+            "determiner":"un"
+        },
+        "in3/min":{
+            "singular":"pouce cube minute",
+            "plural":"pouces cubes minute",
+            "determiner":"un"
+        },
+        "in3/h":{
+            "singular":"pouce cube heure",
+            "plural":"pouces cubes heure",
+            "determiner":"un"
+        },
+        "fl-oz/s":{
+            "singular":"once liquide seconde",
+            "plural":"onces liquides seconde",
+            "determiner":"une"
+        },
+        "fl-oz/min":{
+            "singular":"once liquide minute",
+            "plural":"onces liquides minute",
+            "determiner":"une"
+        },
+        "fl-oz/h":{
+            "singular":"once liquide heure",
+            "plural":"onces liquides heure",
+            "determiner":"une"
+        },
+        "ft3/s":{
+            "singular":"pouce cube seconde",
+            "plural":"pouces cubes seconde",
+            "determiner":"un"
+        },
+        "ft3/min":{
+            "singular":"pouce cube minute",
+            "plural":"pouces cubes minute",
+            "determiner":"un"
+        },
+        "ft3/h":{
+            "singular":"pouce cube heure",
+            "plural":"pouces cubes heure",
+            "determiner":"un"
+        },
+        "yd3/s":{
+            "singular":"yard cube seconde",
+            "plural":"yards cubes seconde",
+            "determiner":"un"
+        },
+        "yd3/min":{
+            "singular":"yard cube minute",
+            "plural":"yards cubes minute",
+            "determiner":"un"
+        },
+        "yd3/h":{
+            "singular":"yard cube heure",
+            "plural":"yards cubes heure",
+            "determiner":"un"
+        },
+        "tsp/s":{
+            "singular":"cuillère à café seconde",
+            "plural":"cuillères à café seconde",
+            "determiner":"une"
+        },
+        "m/s":{
+            "singular":"mètre seconde",
+            "plural":"mètres seconde",
+            "determiner":"un"
+        },
+        "km/h":{
+            "singular":"kilomètre heure",
+            "plural":"kilomètres heure",
+            "determiner":"un"
+        },
+        "mph":{
+            "singular":"mile heure",
+            "plural":"miles heure",
+            "determiner":"un"
+        },
+        "knot":{
+            "singular":"noeud",
+            "plural":"noeuds",
+            "determiner":"un"
+        },
+        "ft/s":{
+            "singular":"pied seconde",
+            "plural":"pieds seconde",
+            "determiner":"un"
+        },
+        "Pa":{
+            "singular":"Pascal",
+            "plural":"Pascals",
+            "determiner":"un"
+        },
+        "hPa":{
+            "singular":"hectopascal",
+            "plural":"hectopascals",
+            "determiner":"un"
+        },
+        "kPa":{
+            "singular":"kilopascal",
+            "plural":"kilopascals",
+            "determiner":"un"
+        },
+        "MPa":{
+            "singular":"megapascal",
+            "plural":"megapascals",
+            "determiner":"un"
+        },
+        "bar":{
+            "singular":"bar",
+            "plural":"bars",
+            "determiner":"un"
+        },
+        "b":{
+            "singular":"bit",
+            "plural":"bits",
+            "determiner":"un"
+        },
+        "Kb":{
+            "singular":"kilobit",
+            "plural":"kilobits",
+            "determiner":"un"
+        },
+        "Mb":{
+            "singular":"mégabit",
+            "plural":"mégabits",
+            "determiner":"un"
+        },
+        "Gb":{
+            "singular":"gigabit",
+            "plural":"gigabits",
+            "determiner":"un"
+        },
+        "Tb":{
+            "singular":"térabit",
+            "plural":"térabits",
+            "determiner":"un"
+        },
+        "B":{
+            "singular":"octet",
+            "plural":"octets",
+            "determiner":"un"
+        },
+        "KB":{
+            "singular":"kilo-octet",
+            "plural":"kilo-octets",
+            "determiner":"un"
+        },
+        "MB":{
+            "singular":"méga-octet",
+            "plural":"méga-octets",
+            "determiner":"un"
+        },
+        "GB":{
+            "singular":"giga-octet",
+            "plural":"giga-octets",
+            "determiner":"un"
+        },
+        "TB":{
+            "singular":"téra-octet",
+            "plural":"téra-octets",
+            "determiner":"un"
+        },
+        "V":{
+            "singular":"volt",
+            "plural":"volts",
+            "determiner":"un"
+        },
+        "mV":{
+            "singular":"millivolt",
+            "plural":"millivolts",
+            "determiner":"un"
+        },
+        "A":{
+            "singular":"ampère",
+            "plural":"ampères",
+            "determiner":"un"
+        },
+        "mA":{
+            "singular":"milli-ampère",
+            "plural":"milli-ampères",
+            "determiner":"un"
+        },
+        "kA":{
+            "singular":"kilo-ampère",
+            "plural":"kilo-ampères",
+            "determiner":"un"
+        },
+        "ac":{
+            "singular":"acre",
+            "plural":"acres",
+            "determiner":"un"
+        }
     }
 }

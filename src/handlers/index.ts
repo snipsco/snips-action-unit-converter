@@ -1,5 +1,4 @@
 import { translation, logger } from '../utils'
-import { pokemonHandler } from './pokemon'
 import { FlowContinuation, IntentMessage, FlowActionReturn } from 'hermes-javascript'
 import { doConvertHandler } from './doConvert'
 

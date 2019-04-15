@@ -7,7 +7,7 @@
     "start": "npm run lint && npm run build && npm run test",
     "build": "npm run clean && tsc",
     "watch": "tsc -w",
-    "dev": "tsc-watch --noClear --onSuccess \"node action-snips.js\"",
+    "dev": "tsc-watch --noClear --onSuccess \"node action-unit-converter.js\"",
     "lint": "eslint \"**/*.js\" \"**/*.ts\"",
     "test": "jest '^.*\\.spec\\.[jt]s$'",
     "clean": "rimraf dist"
@@ -35,6 +35,7 @@
     "uuid": "^3.3.2"
   },
   "dependencies": {
+    "convert-units": "^2.3.4",
     "debug": "^4.1.1",
     "hermes-javascript": "^0.3.5",
     "i18next": "^15.0.4",

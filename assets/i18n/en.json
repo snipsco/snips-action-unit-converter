@@ -8,22 +8,593 @@
         "APIRequest": "Sorry, the service provider is unreachable.",
         "unspecific": "Oops, something went wrong."
     },
-    "pokemon": {
-        "info": "{{ name }}'s weight is {{ weight }} and its height is {{ height }}."
-    },
     "doConvert": {
         "info": "From unit found is {{ unitFrom }}, to unit is {{ unitTo }}",
-        "conversion": "{{ amount }} {{ unitFrom }} corresponding to {{ amountResult }} {{ unitTo }}",
-        "sameUnits": ["I'm afraid it's not useful to convert a unit into the same one.", "I'm sorry but it's seems that you chose the same units."],
+        "conversion": [
+            "{{ amount }} {{ unitFrom }} corresponding to {{ amountResult }} {{ unitTo }}",
+            "{{ amount }} {{ unitFrom }} is {{ amountResult }} {{ unitTo }}",
+            "{{ amount }} {{ unitFrom }} equal {{ amountResult }} {{ unitTo }}"
+        ],
+        "sameUnits": [
+            "I'm afraid it's not useful to convert a unit into the same one.", 
+            "I'm sorry but it's seems that you chose the same units."
+        ],
         "notSameMeasurement":"I am sorry,  but the conversion between a {{ unitTypeFrom }} and a {{ unitTypeTo }} is impossible.",
-        "missingUnitFrom": "Missing unit from, try again.",
-        "missingUnitFromTwice": "You didn't have provided the missing unit, I can't help you.",
+        "unitFromNotHandled":[
+            "I'm afraid I don't handle the original unit for this conversion",
+            "I am sorry, but I don't know one of the unit."
+        ],
+        "unitToNotHandled":[
+            "I'm afraid I can't convert in this unit yet.",
+            "I am sorry, but I don't know one of the unit."
+
+        ],
+        "missingUnitFrom": [
+            "Sorry, but I didn't understand from which unit I am supposed to convert, try again.",
+            "I'm afraid I did'nt understand which unit are you trying to convert from.",
+            "Which unit are you trying to convert from ?"
+        ],
+        "missingUnitFromTwice": "You didn't have provided the missing unit, sorry but I can't help you.",
         "missingUnitTo": "Missing unit to, try again."
     },
-    "unit":{
+    "conversionPossibilities": {
+        "generalInfo": "You can ask me to make some conversion about {{ possibilities }}.",
+        "unitPossibilities": "I can convert {{ unit }} in {{ possibilities }}.",
+        "measurementPossibilities": "I can convert {{ measurement }} in {{ possibilities }}.",
+        "unitUnknown": "I'm afraid I don't know this unit, sorry",
+        "measureUnknown": "I'm afraid I don't know anything about that type of measurement, sorry",
+        "caseOunces":"Ounces can be meant as a mass or a volume."
+    },
+    "measures":{
+        "length":"lenght",
+        "area":"area",
+        "mass":"mass",
+        "volume":"volume",
+        "temperature":"temperature",
+        "time":"time",
+        "digital":"digital",
+        "speed":"speed",
+        "pressure":"pressure",
+        "current":"current",
+        "voltage":"voltage",
+        "volumeFlowRate":"volume flow rate"
+    },
+    "power10":"{{ beforeResult }}  time 10 to the  {{ postResult }}",
+    "units":{
+        "mm":{
+            "singular":"millimeter",
+            "plural":"millimeters",
+            "determiner":"a"
+        },
+        "cm":{
+            "singular":"centimeter",
+            "plural":"centimeters",
+            "determiner":"a"
+        },
+        "m":{
+            "singular":"meter",
+            "plural":"meters",
+            "determiner":"a"
+        },
         "km":{
             "singular":"kilometer",
-            "plural":"kilometers"
+            "plural":"kilometers",
+            "determiner":"a"
+        },
+        "in":{
+            "singular":"inch",
+            "plural":"inches",
+            "determiner":"an"
+        },
+        "ft":{
+            "singular":"foot",
+            "plural":"feet",
+            "determiner":"a"
+        },
+        "mi":{
+            "singular":"mile",
+            "plural":"miles",
+            "determiner":"a"
+        },
+        "mm2":{
+            "singular":"square millimeter",
+            "plural":"square millimeters",
+            "determiner":"a"
+        },
+        "cm2":{
+            "singular":"square centimeter",
+            "plural":"square centimeters",
+            "determiner":"a"
+        },
+        "m2":{
+            "singular":"square meter",
+            "plural":"square meters",
+            "determiner":"a"
+        },
+        "km2":{
+            "singular":"square kilometer",
+            "plural":"square kilometers",
+            "determiner":"a"
+        },
+        "ha":{
+            "singular":"hectare",
+            "plural":"hectares",
+            "determiner":"a"
+        },
+        "in2":{
+            "singular":"square inch",
+            "plural":"square inches",
+            "determiner":"a"
+        },
+        "ft2":{
+            "singular":"square foot",
+            "plural":"square feet",
+            "determiner":"a"
+        },
+        "mi2":{
+            "singular":"square mile",
+            "plural":"square miles",
+            "determiner":"a"
+        },
+        "mcg":{
+            "singular":"microgram",
+            "plural":"micrograms",
+            "determiner":"a"
+        },
+        "mg":{
+            "singular":"milligram",
+            "plural":"milligrams",
+            "determiner":"a"
+        },
+        "g":{
+            "singular":"gram",
+            "plural":"grams",
+            "determiner":"a"
+        },
+        "kg":{
+            "singular":"kilogram",
+            "plural":"kilograms",
+            "determiner":"a"
+        },
+        "oz":{
+            "singular":"ounce",
+            "plural":"ounces",
+            "determiner":"an"
+        },
+        "lb":{
+            "singular":"pound",
+            "plural":"pounds",
+            "determiner":"a"
+        },
+        "t":{
+            "singular":"ton",
+            "plural":"tons",
+            "determiner":"a"
+        },
+        "mt":{
+            "singular":"metric ton",
+            "plural":"metric tons",
+            "determiner":"a"
+        },
+        "mm3":{
+            "singular":"cubic millimeter",
+            "plural":"cubic millimeters",
+            "determiner":"a"
+        },
+        "cm3":{
+            "singular":"cubic centimeter",
+            "plural":"cubic centimeters",
+            "determiner":"a"
+        },
+        "m3":{
+            "singular":"cubic meter",
+            "plural":"cubic meters",
+            "determiner":"a"
+        },
+        "km3":{
+            "singular":"cubic kilometer",
+            "plural":"cubic kilometers",
+            "determiner":"a"
+        },
+        "in3":{
+            "singular":"cubic inch",
+            "plural":"cubic inches",
+            "determiner":"a"
+        },
+        "ft3":{
+            "singular":"cubic foot",
+            "plural":"cubic feet",
+            "determiner":"a"
+        },
+        "yd3":{
+            "singular":"cubic yard",
+            "plural":"cubic yards",
+            "determiner":"a"
+        },
+        "ml":{
+            "singular":"milliliter",
+            "plural":"milliliters",
+            "determiner":"a"
+        },
+        "cl":{
+            "singular":"centiliter",
+            "plural":"centiliters",
+            "determiner":"a"
+        },
+        "l":{
+            "singular":"liter",
+            "plural":"liters",
+            "determiner":"a"
+        },
+        "kl":{
+            "singular":"kiloliter",
+            "plural":"kiloliters",
+            "determiner":"a"
+        },
+        "tsp":{
+            "singular":"teaspoon",
+            "plural":"teaspoons",
+            "determiner":"a"
+        },
+        "tbsp":{
+            "singular":"tablespoon",
+            "plural":"tablespoons",
+            "determiner":"a"
+        },
+        "fl-oz":{
+            "singular":"fluid-ounce",
+            "plural":"fluid-ounces",
+            "determiner":"a"
+        },
+        "cup":{
+            "singular":"cup",
+            "plural":"cups",
+            "determiner":"a"
+        },
+        "pt":{
+            "singular":"pint",
+            "plural":"pints",
+            "determiner":"a"
+        },
+        "qt":{
+            "singular":"quart",
+            "plural":"quarts",
+            "determiner":"a"
+        },
+        "gal":{
+            "singular":"gallon",
+            "plural":"gallons",
+            "determiner":"a"
+        },
+        "C":{
+            "singular":"Celsius degree",
+            "plural":"Celsius degrees",
+            "determiner":"a"
+        },
+        "F":{
+            "singular":"Fahrenheit degree",
+            "plural":"Fahrenheit degrees",
+            "determiner":"a"
+        },
+        "K":{
+            "singular":"Kelvin degree",
+            "plural":"Kelvin degrees",
+            "determiner":"a"
+        },
+        "ns":{
+            "singular":"nanosecond",
+            "plural":"nanoseconds",
+            "determiner":"a"
+        },
+        "mu":{
+            "singular":"microsecond",
+            "plural":"microseconds",
+            "determiner":"a"
+        },
+        "ms":{
+            "singular":"millisecond",
+            "plural":"milliseconds",
+            "determiner":"a"
+        },
+        "s":{
+            "singular":"second",
+            "plural":"seconds",
+            "determiner":"a"
+        },
+        "min":{
+            "singular":"minute",
+            "plural":"minutes",
+            "determiner":"a"
+        },
+        "h":{
+            "singular":"hour",
+            "plural":"hours",
+            "determiner":"an"
+        },
+        "d":{
+            "singular":"day",
+            "plural":"days",
+            "determiner":"a"
+        },
+        "week":{
+            "singular":"week",
+            "plural":"weeks",
+            "determiner":"a"
+        },
+        "month":{
+            "singular":"month",
+            "plural":"months",
+            "determiner":"a"
+        },
+        "year":{
+            "singular":"year",
+            "plural":"years",
+            "determiner":"a"
+        },
+        "mm3/s":{
+            "singular":"cubic millimeter per second",
+            "plural":"cubic millimeters per second",
+            "determiner":"a"
+        },
+        "cm3/s":{
+            "singular":"cubic centimeter per second",
+            "plural":"cubic centimeters per second",
+            "determiner":"a"
+        },
+        "ml/s":{
+            "singular":"milliliter per second",
+            "plural":"milliliters per second",
+            "determiner":"a"
+        },
+        "cl/s":{
+            "singular":"centiliter per second",
+            "plural":"centiliters per seconds",
+            "determiner":"a"
+        },
+        "dl/s":{
+            "singular":"deciliter per second",
+            "plural":"deciliters per second",
+            "determiner":"a"
+        },
+        "l/s":{
+            "singular":"liter per second",
+            "plural":"liters per second",
+            "determiner":"a"
+        },
+        "l/min":{
+            "singular":"liter per minute",
+            "plural":"liters per minute",
+            "determiner":"a"
+        },
+        "l/h":{
+            "singular":"liter per hour",
+            "plural":"liters per hour",
+            "determiner":"a"
+        },
+        "kl/s":{
+            "singular":"kiloliter per second",
+            "plural":"kiloliters per second",
+            "determiner":"a"
+        },
+        "kl/min":{
+            "singular":"kiloliter per minute",
+            "plural":"kiloliters per minute",
+            "determiner":"a"
+        },
+        "kl/h":{
+            "singular":"kiloliter per hour",
+            "plural":"kiloliters per hour",
+            "determiner":"a"
+        },
+        "m3/s":{
+            "singular":"cubic meter per second",
+            "plural":"cubic meters per second",
+            "determiner":"a"
+        },
+        "m3/min":{
+            "singular":"cubic meter per minute",
+            "plural":"cubic meters per minute",
+            "determiner":"a"
+        },
+        "m3/h":{
+            "singular":"cubic meter per hour",
+            "plural":"cubic meters per hour",
+            "determiner":"a"
+        },
+        "km3/s":{
+            "singular":"cubic kilometer per second",
+            "plural":"cubic kilometers per seconds",
+            "determiner":"a"
+        },
+        "in3/s":{
+            "singular":"cubic inch per second",
+            "plural":"cubic inches per second",
+            "determiner":"a"
+        },
+        "in3/min":{
+            "singular":"cubic inch per minute",
+            "plural":"cubic inches per minute",
+            "determiner":"a"
+        },
+        "in3/h":{
+            "singular":"cubic inch per hour",
+            "plural":"cubic inches per hour",
+            "determiner":"a"
+        },
+        "fl-oz/s":{
+            "singular":"fluid-ounce per second",
+            "plural":"fluid-ounces per second",
+            "determiner":"a"
+        },
+        "fl-oz/min":{
+            "singular":"fluid-ounce per minute",
+            "plural":"fluid-ounces per minutes",
+            "determiner":"a"
+        },
+        "fl-oz/h":{
+            "singular":"fluid-ounce per hour",
+            "plural":"fluid-ounces per hour",
+            "determiner":"a"
+        },
+        "ft3/s":{
+            "singular":"cubic foot per second",
+            "plural":"cubic feet per second",
+            "determiner":"a"
+        },
+        "ft3/min":{
+            "singular":"cubic foot per minute",
+            "plural":"cubic feet per minutes",
+            "determiner":"a"
+        },
+        "ft3/h":{
+            "singular":"cubic foot per hour",
+            "plural":"cubic feet per hour",
+            "determiner":"a"
+        },
+        "yd3/s":{
+            "singular":"cubic yard per second",
+            "plural":"cubic yards per second",
+            "determiner":"a"
+        },
+        "yd3/min":{
+            "singular":"cubic yard per minute",
+            "plural":"cubic yards per minute",
+            "determiner":"a"
+        },
+        "yd3/h":{
+            "singular":"cubic yard per hour",
+            "plural":"cubic yards per hour",
+            "determiner":"a"
+        },
+        "m/s":{
+            "singular":"meter per second",
+            "plural":"meters per second",
+            "determiner":"a"
+        },
+        "km/h":{
+            "singular":"kilometer per hour",
+            "plural":"kilometers per hour",
+            "determiner":"a"
+        },
+        "mph":{
+            "singular":"mile per hour",
+            "plural":"miles per hour",
+            "determiner":"a"
+        },
+        "knot":{
+            "singular":"knot",
+            "plural":"knots",
+            "determiner":"a"
+        },
+        "ft/s":{
+            "singular":"foot per second",
+            "plural":"feet per second",
+            "determiner":"a"
+        },
+        "Pa":{
+            "singular":"Pascal",
+            "plural":"Pascals",
+            "determiner":"a"
+        },
+        "hPa":{
+            "singular":"hectopascal",
+            "plural":"hectopascals",
+            "determiner":"a"
+        },
+        "kPa":{
+            "singular":"kilopascal",
+            "plural":"kilopascals",
+            "determiner":"a"
+        },
+        "MPa":{
+            "singular":"megapascal",
+            "plural":"megapascals",
+            "determiner":"a"
+        },
+        "bar":{
+            "singular":"bar",
+            "plural":"bars",
+            "determiner":"a"
+        },
+        "b":{
+            "singular":"bit",
+            "plural":"bits",
+            "determiner":"a"
+        },
+        "Kb":{
+            "singular":"kilobit",
+            "plural":"kilobits",
+            "determiner":"a"
+        },
+        "Mb":{
+            "singular":"megabit",
+            "plural":"megabits",
+            "determiner":"a"
+        },
+        "Gb":{
+            "singular":"gigabit",
+            "plural":"gigabits",
+            "determiner":"a"
+        },
+        "Tb":{
+            "singular":"terabit",
+            "plural":"terabits",
+            "determiner":"a"
+        },
+        "B":{
+            "singular":"byte",
+            "plural":"bytes",
+            "determiner":"a"
+        },
+        "KB":{
+            "singular":"kilobyte",
+            "plural":"kilobytes",
+            "determiner":"a"
+        },
+        "MB":{
+            "singular":"megabyte",
+            "plural":"megabytes",
+            "determiner":"a"
+        },
+        "GB":{
+            "singular":"gigabyte",
+            "plural":"gigabytes",
+            "determiner":"a"
+        },
+        "TB":{
+            "singular":"terabyte",
+            "plural":"terabytes",
+            "determiner":"a"
+        },
+        "V":{
+            "singular":"volt",
+            "plural":"volts",
+            "determiner":"a"
+        },
+        "mV":{
+            "singular":"millivolt",
+            "plural":"millivolts",
+            "determiner":"a"
+        },
+        "A":{
+            "singular":"ampere",
+            "plural":"amperes",
+            "determiner":"an"
+        },
+        "mA":{
+            "singular":"milli-ampere",
+            "plural":"milli-amperes",
+            "determiner":"a"
+        },
+        "kA":{
+            "singular":"kilo-ampere",
+            "plural":"kilo-amperes",
+            "determiner":"a"
+        },
+        "ac":{
+            "singular":"acre",
+            "plural":"acres",
+            "determiner":"an"
         }
     }
 }

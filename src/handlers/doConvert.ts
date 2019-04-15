@@ -1,10 +1,11 @@
-import { getPokemon } from '../api'
 import { i18nFactory, configFactory } from '../factories'
 import { message, translation, slot } from '../utils'
 import { logger, CustomSlot} from '../utils'
 import { Handler } from './index'
 import { Dialog, Hermes, NluSlot, slotType } from 'hermes-javascript'
 import convert = require('convert-units')
+import { UNITS, SLOT_CONFIDENCE_THRESHOLD } from '../constants'
+import { chooseBestTts, chooseBestRoundedValue, chooseBestNotation, isUnitHandled, isOzMassOrVolume } from './common'
 
 export type KnownSlots = {
     depth: number,
@@ -15,26 +16,13 @@ export type KnownSlots = {
 }
 
 export const doConvertHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 1 }) {
-    
-    const i18n = i18nFactory.get()
 
-    logger.info('\tKnown slots ? ', knownSlots)
-
-    
     let unitFrom, unitTo, amountToConvert
-//    let unitFrom: string | undefined = '', unitTo: string | undefined, amountToConvert: number | undefined
 
-    // We need this slot, so if the slot had a low confidence or was not mark as required,
-    // we throw an error.
-    /*if(!('repeat' in knownSlots)){
-        knownSlots.repeat = false
-    } else {
-        flow.end()
-        return translation.randomTranslation('doConvert.sameUnits', {})
-    }*/
+    logger.info('\tdoConvertHandle, SLOT_CONFIDENCE_THRESHOLD = ', SLOT_CONFIDENCE_THRESHOLD)
 
     if(!('amount' in knownSlots)){
-        const amountSlot: NluSlot<slotType.number> | null = message.getSlotsByName(msg, 'amount', { onlyMostConfident:true })
+        const amountSlot: NluSlot<slotType.number> | null = message.getSlotsByName(msg, 'amount', { onlyMostConfident:true, threshold: SLOT_CONFIDENCE_THRESHOLD})
 
         if(amountSlot){
             amountToConvert = amountSlot.value.value 
@@ -42,12 +30,12 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             amountToConvert = 1
         }
     } else {
-        logger.info('\tamount from previous attempt :', knownSlots.amount)
+        logger.info('\tAmount from previous attempt :', knownSlots.amount)
         amountToConvert = knownSlots.amount
     }
 
     if(!('unit_from' in knownSlots)){
-        const unitFromSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_from', { onlyMostConfident:true })
+        const unitFromSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_from', { onlyMostConfident:true, threshold: SLOT_CONFIDENCE_THRESHOLD })
 
         if(unitFromSlot){
             unitFrom = unitFromSlot.value.value
@@ -57,8 +45,9 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         unitFrom = knownSlots.unit_from
     }
 
+    logger.info('\tUNIT_from:', unitFrom)
     if(!('unit_to' in knownSlots)){
-        const unitToSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_to', { onlyMostConfident:true })
+        const unitToSlot : NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'unit_to', { onlyMostConfident:true, threshold: SLOT_CONFIDENCE_THRESHOLD })
 
         if(unitToSlot){
             unitTo = unitToSlot.value.value 
@@ -68,13 +57,11 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
         unitTo = knownSlots.unit_to
     }
 
-    /*
-    if(!unitFromSlot && !unitToSlot) {
-        throw new Error('intentNotRecognized')
-    }*/
+    logger.info('\tUNIT_to:', unitTo)
 
     if(!unitFrom){
 
+        // If unit_from isn't provided the first time, the assistant does one feedback to ask for it again.
         if(!('alreadyAskedBack' in knownSlots)){
             knownSlots.alreadyAskedBack = true
             flow.continue('snips-assistant:UnitConvert', (msg, flow) => {
@@ -83,11 +70,6 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
                     depth: knownSlots.depth + 1,
                     alreadyAskedBack: knownSlots.alreadyAskedBack
                 } as any)
-    
-                if (!slot.missing(unitFrom)) {
-                    logger.info('\tAdding unit from :', unitFrom)
-                    slotsToBeSent.unit_from = unitFrom
-                }
     
                 if (!slot.missing(unitTo)) {
                     logger.info('\tAdding unit to :', unitTo)
@@ -98,60 +80,57 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
                 return doConvertHandler(msg, flow, slotsToBeSent)
             })
     
-            return i18n('doConvert.missingUnitFrom')
+            return translation.randomTranslation('doConvert.missingUnitFrom', {})
         } else {
             flow.end()
-            return i18n('doConvert.missingUnitFromTwice')
+            return translation.randomTranslation('doConvert.missingUnitFromTwice', {})
         }
         
-
+    } else if (!unitTo){
+        flow.end()
+        return translation.randomTranslation('doConvert.missingUnitTo', {})
     } else if (unitFrom === unitTo){
         flow.end()
-        console.log("Unit_From: " + unitFrom)
-        console.log("Unit_to :" + unitTo)
-        return translation.randomTranslation('doConvert.sameUnits', {})  // ??????
+        return translation.randomTranslation('doConvert.sameUnits', {})
     } else {
+
         flow.end()
 
+        // If one of the unit is a ounce, we have to determine the user means a mass or a volume 
+        if(unitFrom == 'oz'){
+            unitFrom = await isOzMassOrVolume(unitTo)
+        } else if(unitTo == 'oz'){
+            unitTo = await isOzMassOrVolume(unitFrom)
+        }
+
         try{
-            if(!unitTo){
-                var result = Math.round(convert(amountToConvert).from(unitFrom).toBest().val * 100) / 100
-                logger.info('\tConverting to best')
-            } else {
-                var result = Math.round(convert(amountToConvert).from(unitFrom).to(unitTo) * 100) / 100
-                logger.info('\tConverting to : ', unitTo)
-            }
+            let apiUnitFrom, apiUnitTo
 
-            if((0<= result)&&(result<=1)){
-                // => unitToResult : singular
-            } else{
-                // => unitToResult : plural
+            if(!(apiUnitFrom = await isUnitHandled(unitFrom))){
+                return translation.randomTranslation('doConvert.unitFromNotHandled', {})
+            } else if(!(apiUnitTo = await isUnitHandled(unitTo))&&(unitTo)){
+                return translation.randomTranslation('doConvert.unitToNotHandled', {})
             }
-
-            console.log(result)
+            
+            var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
+            var result = await chooseBestRoundedValue(subresult)
+            
+            const unitFromTts = await chooseBestTts(amountToConvert, unitFrom)
+            const unitToTts = await chooseBestTts(result, unitTo)
+            const strAmount = await chooseBestNotation(amountToConvert, unitFrom)
+            const strResult = await chooseBestNotation(result, unitTo)
 
             return translation.randomTranslation('doConvert.conversion', {
-                unitFrom: unitFrom,
-                unitTo: unitTo,
-                amount: amountToConvert,
-                amountResult: result
+                unitFrom: unitFromTts,
+                unitTo: unitToTts,
+                amount: strAmount,
+                amountResult: strResult
             }) 
         } catch(e){
             return translation.randomTranslation('doConvert.notSameMeasurement', {
-                unitTypeFrom: convert().describe(unitFrom).measure,
-                unitTypeTo:convert().describe(unitTo).measure
+                unitTypeFrom: translation.randomTranslation('measures.' + convert().describe(unitFrom).measure, {}),
+                unitTypeTo: translation.randomTranslation('measures.' + convert().describe(unitTo).measure, {})
             })
         }
     }
-
-    //const pokemonId = pokemonSlot.value.value
-    //const pokemon = await getPokemon(pokemonId)
-    
-    /*
-    // Return the TTS speech.
-    return translation.randomTranslation('doConvert.info', {
-        unitFrom: unitFrom,
-        unitTo: unitTo
-        //amount: amountToConvert
-    })*/
 }
