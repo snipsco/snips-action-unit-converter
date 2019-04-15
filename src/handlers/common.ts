@@ -1,4 +1,5 @@
 import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
+import { configFactory } from '../factories'
 import {
     message,
     logger,
@@ -56,28 +57,41 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
     }
 }
 
-export async function chooseBestNotation(result:number): Promise<string>{
-
+export async function chooseBestNotation(result:number, unit:string): Promise<string>{
+    const config = configFactory.get()
     
     let strResult
-    if((result>1000000)||(result<=0.0001)){
-        let regexExp: RegExp = /^[0-9]+\.+[0-9]*e(\-|\+){1}[0-9]*$/
-        strResult = result.toExponential()
-        logger.info('\tStrresult :', strResult)
-        if(regexExp.test(strResult)){
-            let regexTrunc: RegExp = /^[0-9]*\.[0-9]{2,}$/
-            let beforeEResult = strResult.split("e")[0]
-            let postEResult = strResult.split("e")[1]
-
-            if(regexTrunc.test(beforeEResult)){
-                const posPoint = beforeEResult.lastIndexOf('.')
-                beforeEResult = +beforeEResult.slice(0, (+posPoint + 4))
-            }
-            strResult = beforeEResult + " time 10 to the " + postEResult
-        }
+    if (result == 1){
+        strResult = translation.randomTranslation('units.' + unit + '.determiner', {})
     } else {
-        strResult = result.toString()
+        if((result>1000000)||(result<=0.0001)){
+            let regexExp: RegExp = /^[0-9]+\.*[0-9]*e(\-|\+){1}[0-9]*$/
+            strResult = result.toExponential()
+            logger.info('\tStrresult :', strResult)
+
+            if(regexExp.test(strResult)){
+                let regexTrunc: RegExp = /^[0-9]*\.[0-9]{2,}$/
+                let beforeEResult = strResult.split("e")[0]
+                let postEResult = strResult.split("e")[1]
+    
+                if(regexTrunc.test(beforeEResult)){
+                    var posPoint = beforeEResult.lastIndexOf('.')
+                    beforeEResult = +beforeEResult.slice(0, (+posPoint + 4))
+                }
+                strResult = beforeEResult + translation.randomTranslation('power10' , {}) + postEResult
+            }
+
+        } else {
+            strResult = result.toString()
+        }
+
+        let regexPoint: RegExp = /^[0-9]+\.{1}[0-9]+.*$/
+        if((config.locale === "french")&&(regexPoint.test(strResult))){
+            let re = /\./gi;
+            strResult = strResult.replace(re, ",");
+        }
     }
+ 
     return strResult
 }
 

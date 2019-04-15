@@ -122,18 +122,19 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
 
             const unitFromTts = await chooseBestTts(amountToConvert, unitFrom)
             const unitToTts = await chooseBestTts(result, unitTo)
-            const strResult = await chooseBestNotation(result)
+            const strAmount = await chooseBestNotation(amountToConvert, unitFrom)
+            const strResult = await chooseBestNotation(result, unitTo)
 
             return translation.randomTranslation('doConvert.conversion', {
                 unitFrom: unitFromTts,
                 unitTo: unitToTts,
-                amount: amountToConvert,
+                amount: strAmount,
                 amountResult: strResult
             }) 
         } catch(e){
             return translation.randomTranslation('doConvert.notSameMeasurement', {
-                unitTypeFrom: convert().describe(unitFrom).measure,
-                unitTypeTo:convert().describe(unitTo).measure
+                unitTypeFrom: translation.randomTranslation('measures.' + convert().describe(unitFrom).measure, {}),
+                unitTypeTo: translation.randomTranslation('measures.' + convert().describe(unitTo).measure, {})
             })
         }
     }
