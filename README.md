@@ -63,9 +63,9 @@ npm run test
 
 To try the app on an assistant, you should deploy your assistant first : 
 
-    * Create a new assistant on the [Snips Console](https://console.snips.ai/home/assistants/) or use an existant one
-    * Add the `Unit Conversion` (EN or FR) to this assistant
-    * Click on `Deploy assistant` you can ether install it using [Sam](https://docs.snips.ai/reference/sam) or [deploy it manually](https://docs.snips.ai/articles/console/actions/deploying-your-skills#deploy-manually-without-sam)
+* Create a new assistant on the [Snips Console](https://console.snips.ai/home/assistants/) or use an existant one
+* Add the `Unit Conversion` (EN or FR) to this assistant
+* Click on `Deploy assistant` you can ether install it using [Sam](https://docs.snips.ai/reference/sam) or [deploy it manually](https://docs.snips.ai/articles/console/actions/deploying-your-skills#deploy-manually-without-sam)
 
 Other infos can be found on the official [Snips Documentation](https://docs.snips.ai/)
 
