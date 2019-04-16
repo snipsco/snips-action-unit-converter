@@ -30,6 +30,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             amountToConvert = 1
         }
     } else {
+        // Not used for now
         logger.info('\tAmount from previous attempt :', knownSlots.amount)
         amountToConvert = knownSlots.amount
     }
@@ -41,6 +42,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             unitFrom = unitFromSlot.value.value
         }
     } else {
+        // Not used for now
         logger.info('\tunit_from from previous attempt :', knownSlots.unit_from)
         unitFrom = knownSlots.unit_from
     }
@@ -53,6 +55,7 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             unitTo = unitToSlot.value.value 
         }
     } else {
+        // Not used for now
         logger.info('\tunit_to from previous attempt :', knownSlots.unit_to)
         unitTo = knownSlots.unit_to
     }
@@ -60,32 +63,8 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
     logger.info('\tUNIT_to:', unitTo)
 
     if(!unitFrom){
-
-        // If unit_from isn't provided the first time, the assistant does one feedback to ask for it again.
-        if(!('alreadyAskedBack' in knownSlots)){
-            knownSlots.alreadyAskedBack = true
-            flow.continue('snips-assistant:UnitConvert', (msg, flow) => {
-
-                const slotsToBeSent = ({
-                    depth: knownSlots.depth + 1,
-                    alreadyAskedBack: knownSlots.alreadyAskedBack
-                } as any)
-    
-                if (!slot.missing(unitTo)) {
-                    logger.info('\tAdding unit to :', unitTo)
-                    slotsToBeSent.unit_to = unitTo
-                }
-                
-                logger.info('\tSended slots : ', slotsToBeSent)
-                return doConvertHandler(msg, flow, slotsToBeSent)
-            })
-    
-            return translation.randomTranslation('doConvert.missingUnitFrom', {})
-        } else {
-            flow.end()
-            return translation.randomTranslation('doConvert.missingUnitFromTwice', {})
-        }
-        
+        flow.end()
+        return translation.randomTranslation('doConvert.missingUnitFrom', {})   
     } else if (!unitTo){
         flow.end()
         return translation.randomTranslation('doConvert.missingUnitTo', {})

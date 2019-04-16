@@ -27,9 +27,8 @@
             "Désolé, mais je ne connais pas l'une des unités."
         ],
         "missingUnitFrom": [
-            "Désolé, mais je n'ai pas compris depuis qu'elle unité souhaitez-vous convertir, essayez encore !",
-            "Je crains que je n'ai pas compris depuis qu'elle unité vous souhaitez convertir.",
-            "Depuis qu'elle unité souhaitez vous convertir ?"
+            "Désolé, mais je n'ai pas compris depuis qu'elle unité souhaitez-vous convertir.",
+            "Je crains que je n'ai pas compris depuis qu'elle unité vous souhaitez convertir."
         ],
         "missingUnitFromTwice": "Vous n'avez pas fournit l'unité manquante. Désolé mais je ne peux vous aider.",
         "missingUnitTo": "Il manque l'unité dans laquelle vous souhaitez convertir."

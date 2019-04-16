@@ -22,20 +22,20 @@
         "notSameMeasurement":"I am sorry,  but the conversion between a {{ unitTypeFrom }} and a {{ unitTypeTo }} is impossible.",
         "unitFromNotHandled":[
             "I'm afraid I don't handle the original unit for this conversion",
-            "I am sorry, but I don't know one of the unit."
+            "I am sorry, but I don't know the unit from which you try to convert."
         ],
         "unitToNotHandled":[
             "I'm afraid I can't convert in this unit yet.",
-            "I am sorry, but I don't know one of the unit."
-
+            "I am sorry, but I don't know the unit of destination."
         ],
         "missingUnitFrom": [
-            "Sorry, but I didn't understand from which unit I am supposed to convert, try again.",
-            "I'm afraid I did'nt understand which unit are you trying to convert from.",
-            "Which unit are you trying to convert from ?"
+            "Sorry, but I didn't understand from which unit I am supposed to convert.",
+            "I'm afraid I did'nt understand which unit are you trying to convert from."
         ],
         "missingUnitFromTwice": "You didn't have provided the missing unit, sorry but I can't help you.",
-        "missingUnitTo": "Missing unit to, try again."
+        "missingUnitTo": ["Sorry, but I didn't understand to which unit I am supposed to convert.",
+            "I'm afraid I did'nt understand which unit are you trying to convert into."
+        ]
     },
     "conversionPossibilities": {
         "generalInfo": "You can ask me to make some conversion about {{ possibilities }}.",
