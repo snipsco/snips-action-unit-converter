@@ -1,10 +1,9 @@
-import { i18nFactory, configFactory } from '../factories'
-import { message, translation, slot } from '../utils'
-import { logger, CustomSlot} from '../utils'
+import { message, translation} from '../utils'
+import { logger} from '../utils'
 import { Handler } from './index'
-import { Dialog, Hermes, NluSlot, slotType } from 'hermes-javascript'
+import { NluSlot, slotType } from 'hermes-javascript'
 import convert = require('convert-units')
-import { UNITS, SLOT_CONFIDENCE_THRESHOLD } from '../constants'
+import { SLOT_CONFIDENCE_THRESHOLD } from '../constants'
 import { chooseBestTts, chooseBestRoundedValue, chooseBestNotation, isUnitHandled, isOzMassOrVolume } from './common'
 
 export type KnownSlots = {

@@ -1,1 +1,1 @@
-export * from './getPokemon'
+// export * from './getPokemon'

@@ -1,7 +1,5 @@
-import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
 import { configFactory } from '../factories'
 import {
-    message,
     logger,
     translation
 } from '../utils'
