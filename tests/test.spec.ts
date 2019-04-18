@@ -109,6 +109,7 @@ it('Missing unit_to: break conversation saying that this unit is missing', async
     expect(key).toBe('doConvert.missingUnitTo')
 })
 
+/*
 it('Missing unit_from(once): should ask again for unit_from (while keeping the other slots if provided) and do the conversion', async () => {
     const session = new Session()
     await session.start({
@@ -159,6 +160,20 @@ it('Missing unit_from(twice): should ask again for unit_from, and stop', async (
     
     expect(key).toBe('doConvert.missingUnitFromTwice')
 
+})*/
+
+it('Missing unit_from: break conversation saying that this unit is missing', async () => {
+    const session = new Session()
+    await session.start({
+        intentName: 'snips-assistant:UnitConvert',
+        input: 'convert into days',
+        slots: [
+            createUnitToSlot('d')
+        ]
+    })
+    const endSessionMessage = await session.end()
+    var { key, options } = JSON.parse(endSessionMessage.text || '')
+    expect(key).toBe('doConvert.missingUnitFrom')
 })
 
 it('Same units: should say that the conversion between same units is useless (and don\'t do the conversion)', async () => {

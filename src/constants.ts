@@ -6,6 +6,9 @@ export const LANGUAGE_MAPPINGS = {
     french: 'fr'
 }
 export const SLOT_CONFIDENCE_THRESHOLD = 0.3
+export const INTENT_PROBABILITY_THRESHOLD = 0.3
+export const INTENT_FILTER_PROBABILITY_THRESHOLD = 0
+export const ASR_UTTERANCE_CONFIDENCE_THRESHOLD = 0.5
 export const UNITS = [
     {
         assistantKey: 'mm',

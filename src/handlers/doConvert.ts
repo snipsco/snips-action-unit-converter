@@ -3,7 +3,10 @@ import { logger} from '../utils'
 import { Handler } from './index'
 import { NluSlot, slotType } from 'hermes-javascript'
 import convert = require('convert-units')
-import { SLOT_CONFIDENCE_THRESHOLD } from '../constants'
+import { SLOT_CONFIDENCE_THRESHOLD, 
+    INTENT_PROBABILITY_THRESHOLD,
+    ASR_UTTERANCE_CONFIDENCE_THRESHOLD
+} from '../constants'
 import { chooseBestTts, chooseBestRoundedValue, chooseBestNotation, isUnitHandled, isOzMassOrVolume } from './common'
 
 export type KnownSlots = {
@@ -17,6 +20,15 @@ export type KnownSlots = {
 export const doConvertHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 1 }) {
 
     let unitFrom, unitTo, amountToConvert
+
+    if (msg.intent) {
+        if (msg.intent.confidenceScore < INTENT_PROBABILITY_THRESHOLD) {
+            throw new Error('intentNotRecognized')
+        }
+        if (message.getAsrConfidence(msg) < ASR_UTTERANCE_CONFIDENCE_THRESHOLD) {
+            throw new Error('intentNotRecognized')
+        }
+    }
 
     logger.info('\tdoConvertHandle, SLOT_CONFIDENCE_THRESHOLD = ', SLOT_CONFIDENCE_THRESHOLD)
 
