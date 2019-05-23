@@ -1,8 +1,4 @@
-import { configFactory } from '../factories'
-import {
-    logger,
-    translation
-} from '../utils'
+import { config, logger, i18n } from 'snips-toolkit'
 import { UNITS } from '../constants'
 import convert = require('convert-units')
 
@@ -23,14 +19,8 @@ export async function chooseBestTts(amountToCheck:number, unit: string): Promise
      * @return correct word to use
      */
     
-    if((0<= amountToCheck)&&(amountToCheck<=1)){
-        // => singular
-        var i18nTtsPath = 'units.' + unit + '.singular'
-    } else{
-        // => plural
-        var i18nTtsPath = 'units.' + unit + '.plural' 
-    }
-    return translation.randomTranslation(i18nTtsPath, {})
+    const i18nTtsPath = ((0<= amountToCheck)&&(amountToCheck<=1)) ? `units.${ unit }.singular` : `units.${ unit }.plural` 
+    return i18n.randomTranslation(i18nTtsPath, {})
 }
 
 export async function chooseBestRoundedValue(subresult:number): Promise<number>{
@@ -47,7 +37,7 @@ export async function chooseBestRoundedValue(subresult:number): Promise<number>{
     } else if (subresult>= 0.001){
         return subresult = Math.round(subresult * 10000) / 10000
     } else {
-        let regexFilter: RegExp = /^[0-9]*\.0*[^0][0-9]{2,}$/;
+        let regexFilter: RegExp = /^[0-9]*\.0*[^0][0-9]{2,}$/
         let strSubresult = subresult.toString()
         if(regexFilter.test(strSubresult)){
             const posZero = strSubresult.lastIndexOf('0')
@@ -66,11 +56,10 @@ export async function chooseBestNotation(result:number, unit:string): Promise<st
      * @param unit its corresponding unit, for choosing the best determiner
      * @return beautiful handled amount for tts
      */
-    const config = configFactory.get()
     
     let strResult
     if (result == 1){
-        strResult = translation.randomTranslation('units.' + unit + '.determiner', {})
+        strResult = i18n.randomTranslation('units.' + unit + '.determiner', {})
     } else {
         if((result>1000000)||(result<=0.0001)){
             let regexExp: RegExp = /^[0-9]+\.*[0-9]*e(\-|\+){1}[0-9]*$/
@@ -79,26 +68,20 @@ export async function chooseBestNotation(result:number, unit:string): Promise<st
 
             if(regexExp.test(strResult)){
                 let regexTrunc: RegExp = /^[0-9]*\.[0-9]{2,}$/
-                let beforeEResult = strResult.split("e")[0]
-                let postEResult = strResult.split("e")[1]
+                let beforeEResult = strResult.split('e')[0]
+                let postEResult = strResult.split('e')[1]
     
                 if(regexTrunc.test(beforeEResult)){
                     var posPoint = beforeEResult.lastIndexOf('.')
                     beforeEResult = +beforeEResult.slice(0, (+posPoint + 4))
                 }
-                strResult = beforeEResult + translation.randomTranslation('power10' , {}) + postEResult
+                strResult = beforeEResult + i18n.randomTranslation('power10' , {}) + postEResult
             }
 
         } else {
             var roundedVal = (result * 1000) / 1000
             strResult = roundedVal.toString()
         }
-
-        /*let regexPoint: RegExp = /^[0-9]+\.{1}[0-9]+.*$/
-        if((config.locale === "french")&&(regexPoint.test(strResult))){
-            let re = /\./gi;
-            strResult = strResult.replace(re, ",");
-        }*/
     }
  
     return strResult
@@ -112,7 +95,7 @@ export async function isUnitHandled(unit:string): Promise<string|undefined>{
      * @return apiKey unit symbol according to the mapping, undefined if not handled.
      */
 
-    var arrResult = UNITS.filter(function(item){return item.assistantKey === unit;})
+    var arrResult = UNITS.filter(function(item){return item.assistantKey === unit})
     let apiUnit: string|undefined
     if (arrResult.length != 0){
         // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 
@@ -136,7 +119,7 @@ export async function isOzMassOrVolume(unitElse:string|undefined): Promise<strin
 }
 
 export async function getAssistantKey(unit: string): Promise<string|undefined>{
-    var arrResult = UNITS.filter(function(item){return item.apiKey === unit;})
+    var arrResult = UNITS.filter(function(item){return item.apiKey === unit})
     let assistantUnit: string|undefined
     if (arrResult.length != 0){
         // convert-units can handle this unit, it has been found in the correspondance assistantKey/apiKey mapping 

@@ -1,12 +1,7 @@
-import { message, translation} from '../utils'
-import { logger} from '../utils'
-import { Handler } from './index'
-import { NluSlot, slotType } from 'hermes-javascript'
+import { logger, message, i18n, Handler } from 'snips-toolkit'
+import { NluSlot, slotType } from 'hermes-javascript/types'
 import convert = require('convert-units')
-import { SLOT_CONFIDENCE_THRESHOLD, 
-    INTENT_PROBABILITY_THRESHOLD,
-    ASR_UTTERANCE_CONFIDENCE_THRESHOLD
-} from '../constants'
+import { SLOT_CONFIDENCE_THRESHOLD } from '../constants'
 import { chooseBestTts, chooseBestRoundedValue, chooseBestNotation, isUnitHandled, isOzMassOrVolume } from './common'
 
 export type KnownSlots = {
@@ -18,17 +13,7 @@ export type KnownSlots = {
 }
 
 export const doConvertHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 1 }) {
-
     let unitFrom, unitTo, amountToConvert
-
-    if (msg.intent) {
-        if (msg.intent.confidenceScore < INTENT_PROBABILITY_THRESHOLD) {
-            throw new Error('intentNotRecognized')
-        }
-        if (message.getAsrConfidence(msg) < ASR_UTTERANCE_CONFIDENCE_THRESHOLD) {
-            throw new Error('intentNotRecognized')
-        }
-    }
 
     logger.info('\tdoConvertHandle, SLOT_CONFIDENCE_THRESHOLD = ', SLOT_CONFIDENCE_THRESHOLD)
 
@@ -75,13 +60,13 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
 
     if(!unitFrom){
         flow.end()
-        return translation.randomTranslation('doConvert.missingUnitFrom', {})   
+        return i18n.randomTranslation('doConvert.missingUnitFrom', {})   
     } else if (!unitTo){
         flow.end()
-        return translation.randomTranslation('doConvert.missingUnitTo', {})
+        return i18n.randomTranslation('doConvert.missingUnitTo', {})
     } else if (unitFrom === unitTo){
         flow.end()
-        return translation.randomTranslation('doConvert.sameUnits', {})
+        return i18n.randomTranslation('doConvert.sameUnits', {})
     } else {
 
         flow.end()
@@ -97,9 +82,9 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             let apiUnitFrom, apiUnitTo
 
             if(!(apiUnitFrom = await isUnitHandled(unitFrom))){
-                return translation.randomTranslation('doConvert.unitFromNotHandled', {})
+                return i18n.randomTranslation('doConvert.unitFromNotHandled', {})
             } else if(!(apiUnitTo = await isUnitHandled(unitTo))&&(unitTo)){
-                return translation.randomTranslation('doConvert.unitToNotHandled', {})
+                return i18n.randomTranslation('doConvert.unitToNotHandled', {})
             }
             
             var subresult = convert(amountToConvert).from(apiUnitFrom).to(apiUnitTo)
@@ -110,16 +95,16 @@ export const doConvertHandler: Handler = async function (msg, flow, knownSlots: 
             const strAmount = await chooseBestNotation(amountToConvert, unitFrom)
             const strResult = await chooseBestNotation(result, unitTo)
 
-            return translation.randomTranslation('doConvert.conversion', {
+            return i18n.randomTranslation('doConvert.conversion', {
                 unitFrom: unitFromTts,
                 unitTo: unitToTts,
                 amount: strAmount,
                 amountResult: strResult
             }) 
         } catch(e){
-            return translation.randomTranslation('doConvert.notSameMeasurement', {
-                unitTypeFrom: translation.randomTranslation('measures.' + convert().describe(unitFrom).measure, {}),
-                unitTypeTo: translation.randomTranslation('measures.' + convert().describe(unitTo).measure, {})
+            return i18n.randomTranslation('doConvert.notSameMeasurement', {
+                unitTypeFrom: i18n.randomTranslation('measures.' + convert().describe(unitFrom).measure, {}),
+                unitTypeTo: i18n.randomTranslation('measures.' + convert().describe(unitTo).measure, {})
             })
         }
     }
