@@ -1,7 +1,7 @@
 {
   "name": "snips-action-unit-converter",
   "version": "0.0.1",
-  "description": "Snips action code for the uniter conversion app.",
+  "description": "Snips action code for the Uniter Converter app",
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run lint && npm run build && npm run test",
