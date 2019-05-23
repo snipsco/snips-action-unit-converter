@@ -1,6 +1,6 @@
 import { logger, message, i18n, Handler } from 'snips-toolkit'
 import { NluSlot, slotType } from 'hermes-javascript/types'
-import convert = require('convert-units')
+import convert from 'convert-units'
 import { SLOT_CONFIDENCE_THRESHOLD } from '../constants'
 import { chooseBestTts, chooseBestRoundedValue, chooseBestNotation, isUnitHandled, isOzMassOrVolume } from './common'
 

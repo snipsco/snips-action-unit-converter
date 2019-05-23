@@ -4,7 +4,7 @@
   "description": "Snips action code for the Uniter Converter app",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm run lint && npm run build && npm run test",
+    "start": "npm run lint && npm run build && npm run test && npm run test:sandbox",
     "build": "snips-toolkit build",
     "dev": "snips-toolkit dev",
     "test": "snips-toolkit test '^.*\\.spec\\.[jt]s$'",
@@ -26,8 +26,12 @@
   "dependencies": {
     "convert-units": "^2.3.4",
     "hermes-javascript": "^0.3.11",
-    "snips-toolkit": "^0.1.5",
-    "wretch": "^1.4.2",
-    "wretch-middlewares": "^0.1.8"
-  }
+    "snips-toolkit": "^0.1.5"
+  },
+  "sandbox": [
+    "fs",
+    "path",
+    "tty",
+    "util"
+  ]
 }

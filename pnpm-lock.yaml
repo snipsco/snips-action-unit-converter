@@ -2,8 +2,6 @@ dependencies:
   convert-units: 2.3.4
   hermes-javascript: 0.3.11
   snips-toolkit: 0.1.5
-  wretch: 1.5.2
-  wretch-middlewares: 0.1.10
 devDependencies:
   '@types/jest': 24.0.13
   '@types/node': 11.13.11
@@ -6894,12 +6892,6 @@ packages:
   /wrappy/1.0.2:
     resolution:
       integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
-  /wretch-middlewares/0.1.10:
-    dependencies:
-      wretch: 1.5.2
-    dev: false
-    resolution:
-      integrity: sha512-levcaYwF4/0rt3y3SvKVLNiuMTZW0lRcje+XZaALRja7HCo28vNX9PagYPKGJil5ApTaARZlWcCcGt0lxIaDdQ==
   /wretch/1.5.2:
     dev: false
     resolution:
@@ -7013,6 +7005,7 @@ packages:
     name: ffi
     requiresBuild: true
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/node-ffi/node-ffi/tar.gz/d9b843c03b35b99f205d001ebcbedd1b6c63b3d0'
     version: 2.3.0
 specifiers:
@@ -7026,5 +7019,3 @@ specifiers:
   hermes-javascript: ^0.3.11
   snips-toolkit: ^0.1.5
   typescript: ^3.3.3
-  wretch: ^1.4.2
-  wretch-middlewares: ^0.1.8

@@ -1,7 +1,7 @@
-require('./helpers/setup').bootstrap()
-
-import Session from './helpers/session'
+import { Test } from 'snips-toolkit'
 import { createUnitFromSlot, createUnitToSlot, createAmountSlot } from './utils'
+
+const { Session } = Test
 
 it('Simple conversion: should query a conversion between a unit and an amount (45km)and another(mi)', async () => {
         const session = new Session()
@@ -75,7 +75,7 @@ it('Not handled unit_to: should tell that the unit_to is not handle by the conve
         ]
     })
     const endSessionMessage = await session.end()
-    const { key, options } = JSON.parse(endSessionMessage.text || '')
+    const { key } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.unitToNotHandled')
 })
 
@@ -90,7 +90,7 @@ it('Not handled unit_from: should tell that the unit_from is not handle by the c
         ]
     })
     const endSessionMessage = await session.end()
-    const { key, options } = JSON.parse(endSessionMessage.text || '')
+    const { key } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.unitFromNotHandled')
 })
 
@@ -105,7 +105,7 @@ it('Missing unit_to: break conversation saying that this unit is missing', async
         ]
     })
     const endSessionMessage = await session.end()
-    const { key, options } = JSON.parse(endSessionMessage.text || '')
+    const { key } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.missingUnitTo')
 })
 
@@ -172,7 +172,7 @@ it('Missing unit_from: break conversation saying that this unit is missing', asy
         ]
     })
     const endSessionMessage = await session.end()
-    var { key, options } = JSON.parse(endSessionMessage.text || '')
+    var { key } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.missingUnitFrom')
 })
 
@@ -188,6 +188,6 @@ it('Same units: should say that the conversion between same units is useless (an
         ]
     })
     const endSessionMessage = await session.end()
-    const { key, options } = JSON.parse(endSessionMessage.text || '')
+    const { key } = JSON.parse(endSessionMessage.text || '')
     expect(key).toBe('doConvert.sameUnits')
 })

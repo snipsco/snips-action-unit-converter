@@ -1,6 +1,6 @@
 import { config, logger, i18n } from 'snips-toolkit'
 import { UNITS } from '../constants'
-import convert = require('convert-units')
+import convert from 'convert-units'
 
 export type KnownSlots = {
     depth: number,
@@ -62,7 +62,7 @@ export async function chooseBestNotation(result:number, unit:string): Promise<st
         strResult = i18n.randomTranslation('units.' + unit + '.determiner', {})
     } else {
         if((result>1000000)||(result<=0.0001)){
-            let regexExp: RegExp = /^[0-9]+\.*[0-9]*e(\-|\+){1}[0-9]*$/
+            let regexExp: RegExp = /^[0-9]+\.*[0-9]*e(-|\+){1}[0-9]*$/
             strResult = result.toExponential()
             logger.info('\tStrresult :', strResult)
 
