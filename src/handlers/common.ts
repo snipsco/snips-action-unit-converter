@@ -94,11 +94,11 @@ export async function chooseBestNotation(result:number, unit:string): Promise<st
             strResult = roundedVal.toString()
         }
 
-        let regexPoint: RegExp = /^[0-9]+\.{1}[0-9]+.*$/
+        /*let regexPoint: RegExp = /^[0-9]+\.{1}[0-9]+.*$/
         if((config.locale === "french")&&(regexPoint.test(strResult))){
             let re = /\./gi;
             strResult = strResult.replace(re, ",");
-        }
+        }*/
     }
  
     return strResult
