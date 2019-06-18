@@ -26,8 +26,7 @@
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "convert-units": "^2.3.4",
-    "snips-toolkit-runner": "^1.0.0"
+    "convert-units": "^2.3.4"
   },
   "sandbox": [
     "fs",
