@@ -1,4 +1,4 @@
-import { config, logger, i18n } from 'snips-toolkit'
+import { logger, i18n } from 'snips-toolkit'
 import { UNITS } from '../constants'
 import convert from 'convert-units'
 
