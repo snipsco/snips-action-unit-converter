@@ -2,6 +2,8 @@
 
 Snips action code for the Unit Conversion app
 
+[![Build Status](https://travis-ci.org/snipsco/snips-action-unit-converter.svg?branch=master)](https://travis-ci.org/snipsco/snips-action-unit-converter)
+
 ## Setup
 
 ```sh
@@ -63,8 +65,8 @@ npm start
 
 **In test mode, i18n output and http calls are mocked.**
 
-- **http**: see `tests/httpMocks/index.ts`
-- **i18n**: see `src/factories/i18nFactory.ts`
+- **http**: mocks are written in `tests/httpMocks/index.ts`
+- **i18n**: mocked by `snips-toolkit`, see the [documentation](https://github.com/snipsco/snips-javascript-toolkit#i18n).
 
 ## Contributing
 
