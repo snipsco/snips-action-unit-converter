@@ -10,7 +10,7 @@ export default async function ({
     done
 }: {
     hermes: Hermes,
-    done: Done 
+    done: Done
 }) {
     try {
         const { name } = require('../package.json')
@@ -24,7 +24,7 @@ export default async function ({
         const dialog = hermes.dialog()
 
         // Subscribe to the app intents
-        dialog.flow('snips-assistant:UnitConvert', handlers.doConvert)
+        dialog.flow(`${ config.get().assistantPrefix }:UnitConvert`, handlers.doConvert)
     } catch (error) {
         // Output initialization errors to stderr and exit
         const message = await i18n.errorMessage(error)
